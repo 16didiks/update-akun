@@ -2,7 +2,7 @@ import FormInput from "@/features/akun/components/FormInput";
 
 export default function BankAkhirFields() {
   return (
-    <div className="mt-8 border-t border-gray-800 pt-6">
+    <div className="mt-8 border-t border-gray-200 pt-6">
       <h2 className="text-base font-semibold mb-4">
         Perubahan Rekening Bank Akhir
       </h2>

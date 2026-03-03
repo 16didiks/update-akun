@@ -13,6 +13,7 @@ export default function ChangePhotoModal({ isOpen, onClose }: Props) {
   if (!isOpen) return null;
 
   const openGallery = () => {
+    fileInputRef.current?.removeAttribute("capture");
     fileInputRef.current?.click();
   };
 
@@ -25,7 +26,6 @@ export default function ChangePhotoModal({ isOpen, onClose }: Props) {
     const file = e.target.files?.[0];
     if (file) {
       console.log("Selected file:", file);
-      // nanti kirim ke API upload
     }
     onClose();
   };
@@ -36,23 +36,28 @@ export default function ChangePhotoModal({ isOpen, onClose }: Props) {
       onClick={onClose}
     >
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/60" />
+      <div className="absolute inset-0 bg-black/40" />
 
       {/* Modal */}
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-xs bg-neutral-900 rounded-2xl p-6"
+        className="relative w-full max-w-xs bg-white rounded-2xl p-6 shadow-xl"
       >
-        <h3 className="text-sm font-semibold mb-4">Ubah Foto</h3>
+        <h3 className="text-sm font-semibold mb-4 text-gray-900 text-center">
+          Ubah Foto
+        </h3>
 
         <button
           onClick={openGallery}
-          className="w-full text-left py-3 border-b border-neutral-800 text-sm"
+          className="w-full text-left py-3 border-b border-gray-200 text-sm text-gray-700 hover:bg-gray-50 transition"
         >
           Pilih Dari Galeri
         </button>
 
-        <button onClick={openCamera} className="w-full text-left py-3 text-sm">
+        <button
+          onClick={openCamera}
+          className="w-full text-left py-3 text-sm text-gray-700 hover:bg-gray-50 transition"
+        >
           Ambil Dari Kamera
         </button>
       </div>

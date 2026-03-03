@@ -12,8 +12,21 @@ export default function FormInput({ label, placeholder, required }: Props) {
       </label>
 
       <input
-        placeholder={placeholder}
-        className="w-full bg-neutral-800 text-white px-4 py-3 rounded-xl text-sm outline-none focus:ring-2 focus:ring-green-500"
+        className="
+    w-full
+    bg-white
+    border
+    border-gray-300
+    rounded-lg
+    px-4
+    py-3
+    text-gray-900
+    placeholder-gray-400
+    focus:outline-none
+    focus:ring-2
+    focus:ring-green-500
+    focus:border-green-500
+  "
       />
     </div>
   );
