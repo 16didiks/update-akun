@@ -12,6 +12,7 @@ export default function FormInput({ label, placeholder, required }: Props) {
       </label>
 
       <input
+        placeholder={placeholder}
         className="
     w-full
     bg-white

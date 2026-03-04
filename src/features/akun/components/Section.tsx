@@ -14,7 +14,7 @@ export default function Section({
   children,
 }: SectionProps) {
   return (
-    <div className="mt-8 border-t border-gray-800 pt-6">
+    <div className="mt-8 border-t border-gray-200 pt-6">
       <div className="flex justify-between items-center mb-4">
         <h2 className="font-semibold text-base">{title}</h2>
 
