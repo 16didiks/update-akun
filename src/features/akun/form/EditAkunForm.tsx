@@ -1,45 +1,114 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 import PersonalInfoFields from "./sections/PersonalInfoFields";
+import AddressFields from "./sections/AddressFields";
+import FamilyFields from "./sections/FamilyFields";
+import JobFields from "./sections/JobFields";
 import BankAkhirFields from "./sections/BankAkhirFields";
+
 import ImportantInfoModal from "./modals/ImportantInfoModal";
 import VerificationMethodModal from "./modals/VerificationMethodModal";
 import OTPModal from "./modals/OTPModal";
 import SuccessModal from "./modals/SuccessModal";
-import { useRouter } from "next/navigation";
 
 export default function EditAkunForm() {
   const [showImportant, setShowImportant] = useState(false);
   const [showVerification, setShowVerification] = useState(false);
   const [showOtp, setShowOtp] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+
+  const [step, setStep] = useState(1);
+
   const router = useRouter();
+
+  const totalSteps = 5;
+
+  const renderStep = () => {
+    switch (step) {
+      case 1:
+        return <PersonalInfoFields />;
+      case 2:
+        return <AddressFields />;
+      case 3:
+        return <FamilyFields />;
+      case 4:
+        return <JobFields />;
+      case 5:
+        return <BankAkhirFields />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <>
       <div className="max-w-sm mx-auto min-h-screen bg-white text-gray-900 px-4 py-6">
-        <div className="flex items-center mb-6">
+
+        {/* Header */}
+        <div className="flex items-center mb-4">
           <button onClick={() => router.back()} className="mr-3">
             ←
           </button>
-
           <h1 className="text-lg font-semibold">Form Pengkinian Data</h1>
         </div>
 
-        <PersonalInfoFields />
-        <BankAkhirFields />
+        {/* Step Indicator */}
+        <div className="text-sm text-gray-500 mb-2">
+          Step {step} dari {totalSteps}
+        </div>
 
-        <div className="mt-10 pb-6">
-          <button
-            onClick={() => setShowImportant(true)}
-            className="w-full bg-green-600 py-3 rounded-xl font-semibold"
-          >
-            Konfirmasi
-          </button>
+        {/* Progress Bar */}
+        <div className="w-full bg-gray-200 h-2 rounded mb-6">
+          <div
+            className="bg-green-600 h-2 rounded"
+            style={{ width: `${(step / totalSteps) * 100}%` }}
+          />
+        </div>
+
+        {/* Current Step Section */}
+        {renderStep()}
+
+        {/* Navigation Buttons */}
+        <div className="mt-10 pb-6 flex gap-3">
+
+          {step > 1 && (
+            <button
+              onClick={() => {
+                setStep(step - 1);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className="w-1/3 border border-gray-300 py-3 rounded-xl"
+            >
+              Kembali
+            </button>
+          )}
+
+          {step < totalSteps ? (
+            <button
+              onClick={() => {
+                setStep(step + 1);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className="flex-1 bg-green-600 text-white py-3 rounded-xl font-semibold"
+            >
+              Selanjutnya
+            </button>
+          ) : (
+            <button
+              onClick={() => setShowImportant(true)}
+              className="flex-1 bg-green-600 text-white py-3 rounded-xl font-semibold"
+            >
+              Konfirmasi
+            </button>
+          )}
+
         </div>
       </div>
 
+      {/* Modals */}
       <ImportantInfoModal
         isOpen={showImportant}
         onClose={() => setShowImportant(false)}

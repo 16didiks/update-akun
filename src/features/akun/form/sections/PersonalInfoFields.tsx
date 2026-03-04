@@ -1,26 +1,36 @@
 import FormInput from "@/features/akun/components/FormInput";
+import RadioInput from "../inputs/RadioInput";
 
 export default function PersonalInfoFields() {
   return (
     <div className="mb-8">
-      <h2 className="text-base font-semibold mb-4">Perubahan Data Pribadi</h2>
+      <h2 className="text-base font-semibold">Perubahan Data Pribadi</h2>
+      <label htmlFor="">Lengkapi data diri anda sesuai KTP.</label>
+      <br /><br />
 
       <FormInput
-        label="Alamat Pribadi"
-        placeholder="Jl. Kenari Indah No.23..."
+        label="Kode Referal / Kode Sales (Jika ada)"
+        placeholder="12345"
       />
 
-      <FormInput label="Status Perkawinan" placeholder="Belum Kawin" />
+      <FormInput label="Email" placeholder="email@gmail.com" />
 
-      <FormInput label="Data Pekerjaan" placeholder="Karyawan" />
+      <FormInput label="Nomor Handphone" placeholder="0852.xxxx.xxxx" />
 
-      <FormInput label="Alamat Pekerjaan" placeholder="PT MNC Sekuritas" />
+      <FormInput label="No. E-KTP" placeholder="1712xxxxxxxxxx4" />
 
-      <FormInput label="No. Handphone" placeholder="081234567890" required />
+      <FormInput label="Nama lengkap sesuai KTP" placeholder="Jhon" required />
 
-      <FormInput label="Alamat Email" placeholder="email@gmail.com" required />
+      <RadioInput
+        label="Sudah Punya NPWP?"
+        name="npwp_status"
+        options={[
+          { label: "Sudah", value: "yes" },
+          { label: "Belum", value: "no" },
+        ]}
+      />
 
-      <FormInput label="Data BO" placeholder="Suharman Hidayat" />
+      <FormInput label="No. NPWP" placeholder="456.646.xxx.xx.xxx" required />
     </div>
   );
 }
