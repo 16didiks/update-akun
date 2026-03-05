@@ -1,5 +1,7 @@
 import FormInput from "@/features/akun/components/FormInput";
 import RadioInput from "../inputs/RadioInput";
+import DateInput from "../inputs/DateInput";
+import SelectInput from "../inputs/SelectInput";
 
 export default function PersonalInfoFields() {
   return (
@@ -31,6 +33,52 @@ export default function PersonalInfoFields() {
       />
 
       <FormInput label="No. NPWP" placeholder="456.646.xxx.xx.xxx" required />
+
+      <FormInput label="Tempat Lahir" placeholder="Jakarta" required />
+
+      <DateInput label="Tanggal Lahir" required />
+
+      <SelectInput
+        label="Jenis Kelamin"
+        required
+        options={[
+          { label: "Laki-laki", value: "male" },
+          { label: "Perempuan", value: "female" },
+        ]}
+      />
+
+      <SelectInput
+        label="Agama"
+        required
+        options={[
+          { label: "Islam", value: "w" },
+          { label: "Kristen ", value: "x" },
+          { label: "Hindu", value: "d" },
+        ]}
+      />
+
+      <SelectInput
+        label="Status Perkawinan"
+        required
+        options={[
+          { label: "Menikah", value: "w" },
+          { label: "Single ", value: "x" },
+        ]}
+      />
+
+      <FormInput label="Nama Ibu Kandung" placeholder="Mora" required />
+      
+      <SelectInput
+        label="Pendidikan"
+        required
+        options={[
+          { label: "SD", value: "w" },
+          { label: "SMP ", value: "x" },
+          { label: "SMA/SMk ", value: "r" },
+          { label: "Sarjana ", value: "t" },
+        ]}
+      />
+      
     </div>
   );
 }

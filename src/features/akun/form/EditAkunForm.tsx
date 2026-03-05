@@ -13,6 +13,10 @@ import ImportantInfoModal from "./modals/ImportantInfoModal";
 import VerificationMethodModal from "./modals/VerificationMethodModal";
 import OTPModal from "./modals/OTPModal";
 import SuccessModal from "./modals/SuccessModal";
+import BeneficialOwnerFields from "./sections/BeneficialOwnerFields";
+import BeneficialOwnerAddressFields from "./sections/BeneficialOwnerAddressFields";
+import KtpUploadFields from "./sections/KtpUploadFields";
+import SignatureFields from "./sections/SignatureFields";
 
 export default function EditAkunForm() {
   const [showImportant, setShowImportant] = useState(false);
@@ -24,7 +28,7 @@ export default function EditAkunForm() {
 
   const router = useRouter();
 
-  const totalSteps = 5;
+  const totalSteps = 9;
 
   const renderStep = () => {
     switch (step) {
@@ -37,6 +41,14 @@ export default function EditAkunForm() {
       case 4:
         return <JobFields />;
       case 5:
+        return <BeneficialOwnerFields />;
+      case 6:
+        return <BeneficialOwnerAddressFields />;
+      case 7:
+        return <KtpUploadFields />;
+      case 8:
+        return <SignatureFields />;
+      case 9:
         return <BankAkhirFields />;
       default:
         return null;

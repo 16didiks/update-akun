@@ -1,32 +1,39 @@
 interface Option {
-  label: string
-  value: string
+  label: string;
+  value: string;
 }
 
 interface Props {
-  label: string
-  options: Option[]
+  label: string;
+  options: Option[];
+  required?: boolean;
 }
 
-export default function SelectInput({ label, options }: Props) {
+export default function SelectInput({ label, options, required }: Props) {
   return (
-    <div className="space-y-1">
-      <label className="text-sm text-gray-600 dark:text-gray-300">
+    <div className="mb-6">
+      <label className="block text-sm text-gray-700 mb-1">
         {label}
+        {required && <span className="text-red-500 ml-1">*</span>}
       </label>
 
       <select
         className="
           w-full
+          border
+          border-gray-300
           rounded-lg
-          border border-gray-300 dark:border-gray-600
-          px-3 py-2
+          px-3
+          py-2
           text-sm
-          bg-white dark:bg-gray-800
+          bg-white
           focus:outline-none
-          focus:ring-2 focus:ring-green-500
+          focus:ring-2
+          focus:ring-green-500
         "
       >
+        <option value="" disabled>Pilih</option>
+
         {options.map((opt) => (
           <option key={opt.value} value={opt.value}>
             {opt.label}
@@ -34,5 +41,5 @@ export default function SelectInput({ label, options }: Props) {
         ))}
       </select>
     </div>
-  )
+  );
 }
