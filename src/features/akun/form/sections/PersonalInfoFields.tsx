@@ -1,13 +1,41 @@
 import FormInput from "@/features/akun/components/FormInput";
 import RadioInput from "../inputs/RadioInput";
 import DateInput from "../inputs/DateInput";
-import SelectInput from "../inputs/SelectInput";
+import SearchSelectInput from "../inputs/SearchSelectInput";
+import { MasterField } from "../../types/akun.type";
 
-export default function PersonalInfoFields() {
+interface Props {
+  master: {
+    jenisKelamin: MasterField[];
+    agama: MasterField[];
+    statusPerkawinan: MasterField[];
+  };
+}
+
+export default function PersonalInfoFields({ master }: Props) { 
+
+  const genderOptions =
+    master.jenisKelamin?.map((item) => ({
+      label: item.Description,
+      value: item.Value,
+    })) ?? [];
+
+  const agamaOptions =
+  master.agama?.map((item) => ({
+    label: item.Description,
+    value: item.Value,
+  })) ?? []
+
+  const statusPerkawinanOptions =
+  master.statusPerkawinan?.map((item) => ({
+    label: item.Description,
+    value: item.Value,
+  })) ?? []
+
   return (
     <div className="mb-8">
       <h2 className="text-base font-semibold">Perubahan Data Pribadi</h2>
-      <label htmlFor="">Lengkapi data diri anda sesuai KTP.</label>
+      <label>Lengkapi data diri anda sesuai KTP.</label>
       <br /><br />
 
       <FormInput
@@ -38,37 +66,26 @@ export default function PersonalInfoFields() {
 
       <DateInput label="Tanggal Lahir" required />
 
-      <SelectInput
-        label="Jenis Kelamin"
-        required
-        options={[
-          { label: "Laki-laki", value: "male" },
-          { label: "Perempuan", value: "female" },
-        ]}
-      />
+      <SearchSelectInput
+      label="Jenis Kelamin"
+      options={genderOptions}
+    />
 
-      <SelectInput
+      <SearchSelectInput
         label="Agama"
         required
-        options={[
-          { label: "Islam", value: "w" },
-          { label: "Kristen ", value: "x" },
-          { label: "Hindu", value: "d" },
-        ]}
+        options={agamaOptions}
       />
 
-      <SelectInput
+      <SearchSelectInput
         label="Status Perkawinan"
         required
-        options={[
-          { label: "Menikah", value: "w" },
-          { label: "Single ", value: "x" },
-        ]}
+        options={statusPerkawinanOptions}
       />
 
       <FormInput label="Nama Ibu Kandung" placeholder="Mora" required />
-      
-      <SelectInput
+
+      <SearchSelectInput
         label="Pendidikan"
         required
         options={[
@@ -78,7 +95,6 @@ export default function PersonalInfoFields() {
           { label: "Sarjana ", value: "t" },
         ]}
       />
-      
     </div>
   );
 }

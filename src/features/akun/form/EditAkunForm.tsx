@@ -7,7 +7,8 @@ import PersonalInfoFields from "./sections/PersonalInfoFields";
 import AddressFields from "./sections/AddressFields";
 import FamilyFields from "./sections/FamilyFields";
 import JobFields from "./sections/JobFields";
-import BankAkhirFields from "./sections/BankAkhirFields";
+import BankFields from "./sections/BankFields";
+import { useMasterData } from "../hooks/useMasterData"
 
 import ImportantInfoModal from "./modals/ImportantInfoModal";
 import VerificationMethodModal from "./modals/VerificationMethodModal";
@@ -30,16 +31,18 @@ export default function EditAkunForm() {
 
   const totalSteps = 9;
 
+  const master = useMasterData()
+
   const renderStep = () => {
     switch (step) {
       case 1:
-        return <PersonalInfoFields />;
+        return <PersonalInfoFields master={master} />;
       case 2:
-        return <AddressFields />;
+        return <AddressFields master={master} />;
       case 3:
-        return <FamilyFields />;
+        return <FamilyFields master={master} />;
       case 4:
-        return <JobFields />;
+        return <JobFields master={master}/>;
       case 5:
         return <BeneficialOwnerFields />;
       case 6:
@@ -49,7 +52,7 @@ export default function EditAkunForm() {
       case 8:
         return <SignatureFields />;
       case 9:
-        return <BankAkhirFields />;
+        return <BankFields />;
       default:
         return null;
     }
@@ -64,7 +67,7 @@ export default function EditAkunForm() {
           <button onClick={() => router.back()} className="mr-3">
             ←
           </button>
-          <h1 className="text-lg font-semibold">Form Pengkinian Data</h1>
+          <h1 className="text-lg items-center font-semibold">Form Pengkinian Data</h1>
         </div>
 
         {/* Step Indicator */}

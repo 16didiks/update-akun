@@ -1,7 +1,22 @@
 import FormInput from "@/features/akun/components/FormInput";
 import RadioInput from "../inputs/RadioInput";
+import SearchSelectInput from "../inputs/SearchSelectInput";
+import { MasterField } from "../../types/akun.type";
 
-export default function AddressFields() {
+interface Props {
+  master: {
+    statusRumah: MasterField[];
+  };
+}
+
+export default function AddressFields({ master }: Props) {
+
+const statusRumahOptions =
+    master.statusRumah?.map((item) => ({
+      label: item.Description,
+      value: item.Value,
+    })) ?? [];  
+
   return (
     <div className="mb-8">
       <h2 className="text-base font-semibold mb-4">Alamat Identitas</h2>
@@ -14,7 +29,10 @@ export default function AddressFields() {
 
       <FormInput label="Alamat Lengkap" placeholder="Jl. Kenari Indah No.23" />
 
-      <FormInput label="Status Rumah" placeholder="Pribadi" />
+      <SearchSelectInput
+            label="Status Rumah"
+            options={statusRumahOptions}
+          />
 
       <RadioInput
               label="Alamat Tempat Tinggal"

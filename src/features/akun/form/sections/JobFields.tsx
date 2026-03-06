@@ -1,8 +1,51 @@
 import FormInput from "@/features/akun/components/FormInput";
 import SelectInput from "../inputs/SelectInput";
+import SearchSelectInput from "../inputs/SearchSelectInput";
 import TextAreaInput from "../inputs/TextAreaInput";
+import { MasterField } from "../../types/akun.type";
 
-export default function JobFields() {
+interface Props {
+  master: {
+    pekerjaan: MasterField[];
+    bidangUsaha: MasterField[];
+    jabatan: MasterField[];
+    penghasilanPo: MasterField[];
+    sumberDanaUtama: MasterField[];
+  };
+}
+
+export default function JobFields({ master }: Props) {
+
+    const perkerjaanOptions =
+    master.pekerjaan?.map((item) => ({
+      label: item.Description,
+      value: item.Value,
+    })) ?? [];
+    
+    const bidangUsahaOptions =
+    master.bidangUsaha?.map((item) => ({
+      label: item.Description,
+      value: item.Value,
+    })) ?? [];  
+
+    const jabatanOptions =
+    master.jabatan?.map((item) => ({
+      label: item.Description,
+      value: item.Value,
+    })) ?? []; 
+
+    const penghasilanPoOptions =
+    master.penghasilanPo?.map((item) => ({
+      label: item.Description,
+      value: item.Value,
+    })) ?? []; 
+
+    const sumberDanaUtamaOptions =
+    master.sumberDanaUtama?.map((item) => ({
+      label: item.Description,
+      value: item.Value,
+    })) ?? []; 
+
   return (
     <div className="mb-8">
 
@@ -11,18 +54,20 @@ export default function JobFields() {
         Lengkapi data pekerjaan anda.
       </p>
 
-      <SelectInput
-        label="Pekerjaan"
-        options={[
-          { label: "Pegawai Swasta", value: "swasta" },
-          { label: "Wiraswasta", value: "wiraswasta" },
-          { label: "PNS", value: "pns" },
-        ]}
-      />
+        <SearchSelectInput
+            label="Pekerjaan"
+            options={perkerjaanOptions}
+        />
 
-      <FormInput label="Jabatan" placeholder="Direktur / Presiden" />
+        <SearchSelectInput
+            label="Jabatan"
+            options={jabatanOptions}
+        />
 
-      <FormInput label="Bidang Usaha" placeholder="Finance / Banking" />
+        <SearchSelectInput
+            label="Bidang Usaha"
+            options={bidangUsahaOptions}
+        />
 
       <FormInput label="Nama Perusahaan" placeholder="PT MNC Sekuritas" />
 
@@ -79,14 +124,15 @@ export default function JobFields() {
         placeholder="Masukkan alamat lengkap"
         />
 
-      <SelectInput
-        label="Penghasilan pokok Pertahun"
-        options={[
-          { label: "Lebih dari Rp. 1.000.0000.000", value: "x" },
-        ]}
-       />
+      <SearchSelectInput
+            label="Penghasilan Pokok Pertahun"
+            options={penghasilanPoOptions}
+        />
 
-      <FormInput label="Sumber Dana Utama" placeholder="Gaji" />
+      <SearchSelectInput
+            label="Sumber Dana Utama"
+            options={sumberDanaUtamaOptions}
+        />
 
     </div>
   );

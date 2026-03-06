@@ -1,4 +1,5 @@
 import FormInput from "@/features/akun/components/FormInput";
+import CheckboxInput from "../inputs/CheckboxInput";
 
 export default function BankAkhirFields() {
   return (
@@ -14,6 +15,16 @@ export default function BankAkhirFields() {
         verifikasi via video call oleh Customer Service. Pastikan Handphone Anda
         aktif
       </p>
+
+      <div className="mt-4">
+      <CheckboxInput
+          label="Update Data Ke semua akun"
+        />
+      </div>
+      
+
+      
+
     </div>
   );
 }
