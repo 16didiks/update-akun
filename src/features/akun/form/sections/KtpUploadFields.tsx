@@ -1,13 +1,11 @@
 export default function KtpUploadFields() {
   return (
     <div className="mb-8">
-
-      <h2 className="text-base font-semibold mb-2">
-        Foto KTP
-      </h2>
+      <h2 className="text-base font-semibold mb-2">Foto KTP</h2>
 
       <p className="text-sm text-gray-500 mb-4">
-        Sebelum Anda mengambil foto KTP, pastikan Anda mengikuti langkah berikut ini:
+        Sebelum Anda mengambil foto KTP, pastikan Anda mengikuti langkah berikut
+        ini:
       </p>
 
       {/* Preview KTP */}
@@ -28,12 +26,9 @@ export default function KtpUploadFields() {
         </ul>
       </div>
 
-      <button
-        className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm"
-      >
+      <button className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm">
         Ambil Ulang Foto KTP
       </button>
-
     </div>
-  );
+  )
 }

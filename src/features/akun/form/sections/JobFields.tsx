@@ -1,73 +1,62 @@
-import FormInput from "@/features/akun/components/FormInput";
-import SelectInput from "../inputs/SelectInput";
-import SearchSelectInput from "../inputs/SearchSelectInput";
-import TextAreaInput from "../inputs/TextAreaInput";
-import { MasterField } from "../../types/akun.type";
+import FormInput from '@/features/akun/components/FormInput'
+import SelectInput from '../inputs/SelectInput'
+import SearchSelectInput from '../inputs/SearchSelectInput'
+import TextAreaInput from '../inputs/TextAreaInput'
+import { MasterField } from '../../types/akun.type'
 
 interface Props {
   master: {
-    pekerjaan: MasterField[];
-    bidangUsaha: MasterField[];
-    jabatan: MasterField[];
-    penghasilanPo: MasterField[];
-    sumberDanaUtama: MasterField[];
-  };
+    pekerjaan: MasterField[]
+    bidangUsaha: MasterField[]
+    jabatan: MasterField[]
+    penghasilanPo: MasterField[]
+    sumberDanaUtama: MasterField[]
+  }
 }
 
 export default function JobFields({ master }: Props) {
-
-    const perkerjaanOptions =
+  const perkerjaanOptions =
     master.pekerjaan?.map((item) => ({
       label: item.Description,
       value: item.Value,
-    })) ?? [];
-    
-    const bidangUsahaOptions =
+    })) ?? []
+
+  const bidangUsahaOptions =
     master.bidangUsaha?.map((item) => ({
       label: item.Description,
       value: item.Value,
-    })) ?? [];  
+    })) ?? []
 
-    const jabatanOptions =
+  const jabatanOptions =
     master.jabatan?.map((item) => ({
       label: item.Description,
       value: item.Value,
-    })) ?? []; 
+    })) ?? []
 
-    const penghasilanPoOptions =
+  const penghasilanPoOptions =
     master.penghasilanPo?.map((item) => ({
       label: item.Description,
       value: item.Value,
-    })) ?? []; 
+    })) ?? []
 
-    const sumberDanaUtamaOptions =
+  const sumberDanaUtamaOptions =
     master.sumberDanaUtama?.map((item) => ({
       label: item.Description,
       value: item.Value,
-    })) ?? []; 
+    })) ?? []
 
   return (
     <div className="mb-8">
-
       <h2 className="text-base font-semibold mb-1">Data Pekerjaan</h2>
       <p className="text-sm text-gray-500 mb-4">
         Lengkapi data pekerjaan anda.
       </p>
 
-        <SearchSelectInput
-            label="Pekerjaan"
-            options={perkerjaanOptions}
-        />
+      <SearchSelectInput label="Pekerjaan" options={perkerjaanOptions} />
 
-        <SearchSelectInput
-            label="Jabatan"
-            options={jabatanOptions}
-        />
+      <SearchSelectInput label="Jabatan" options={jabatanOptions} />
 
-        <SearchSelectInput
-            label="Bidang Usaha"
-            options={bidangUsahaOptions}
-        />
+      <SearchSelectInput label="Bidang Usaha" options={bidangUsahaOptions} />
 
       <FormInput label="Nama Perusahaan" placeholder="PT MNC Sekuritas" />
 
@@ -75,9 +64,7 @@ export default function JobFields({ master }: Props) {
 
       {/* Lama Bekerja */}
       <div className="mb-6">
-        <label className="block text-sm text-gray-700 mb-2">
-          Lama Bekerja
-        </label>
+        <label className="block text-sm text-gray-700 mb-2">Lama Bekerja</label>
 
         <div className="flex gap-3">
           <FormInput label="Tahun" placeholder="6" />
@@ -91,23 +78,19 @@ export default function JobFields({ master }: Props) {
       <SelectInput
         label="Provinsi"
         options={[
-          { label: "Jawa Barat", value: "jabar" },
-          { label: "DKI Jakarta", value: "jakarta" },
+          { label: 'Jawa Barat', value: 'jabar' },
+          { label: 'DKI Jakarta', value: 'jakarta' },
         ]}
       />
 
       <SelectInput
         label="Kabupaten / Kota"
-        options={[
-          { label: "Kabupaten Bogor", value: "bogor" },
-        ]}
+        options={[{ label: 'Kabupaten Bogor', value: 'bogor' }]}
       />
 
       <SelectInput
         label="Kecamatan"
-        options={[
-          { label: "Ciawi", value: "ciawi" },
-        ]}
+        options={[{ label: 'Ciawi', value: 'ciawi' }]}
       />
 
       <FormInput label="Kelurahan" placeholder="Ciawi" />
@@ -119,21 +102,17 @@ export default function JobFields({ master }: Props) {
         <FormInput label="RW" placeholder="01" />
       </div>
 
-      <TextAreaInput
-        label="Alamat"
-        placeholder="Masukkan alamat lengkap"
-        />
+      <TextAreaInput label="Alamat" placeholder="Masukkan alamat lengkap" />
 
       <SearchSelectInput
-            label="Penghasilan Pokok Pertahun"
-            options={penghasilanPoOptions}
-        />
+        label="Penghasilan Pokok Pertahun"
+        options={penghasilanPoOptions}
+      />
 
       <SearchSelectInput
-            label="Sumber Dana Utama"
-            options={sumberDanaUtamaOptions}
-        />
-
+        label="Sumber Dana Utama"
+        options={sumberDanaUtamaOptions}
+      />
     </div>
-  );
+  )
 }

@@ -1,10 +1,7 @@
 export default function SignatureFields() {
   return (
     <div className="mb-8">
-
-      <h2 className="text-base font-semibold mb-2">
-        Spesimen Tanda Tangan
-      </h2>
+      <h2 className="text-base font-semibold mb-2">Spesimen Tanda Tangan</h2>
 
       <p className="text-sm text-gray-500 mb-4">
         Silahkan tanda tangan di area kotak yang sudah kami sediakan.
@@ -19,10 +16,7 @@ export default function SignatureFields() {
         Area Tanda Tangan
       </div>
 
-      <button className="text-sm text-gray-500 mb-6">
-        Clear
-      </button>
-
+      <button className="text-sm text-gray-500 mb-6">Clear</button>
     </div>
-  );
+  )
 }

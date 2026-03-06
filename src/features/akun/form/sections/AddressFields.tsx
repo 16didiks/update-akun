@@ -1,21 +1,20 @@
-import FormInput from "@/features/akun/components/FormInput";
-import RadioInput from "../inputs/RadioInput";
-import SearchSelectInput from "../inputs/SearchSelectInput";
-import { MasterField } from "../../types/akun.type";
+import FormInput from '@/features/akun/components/FormInput'
+import RadioInput from '../inputs/RadioInput'
+import SearchSelectInput from '../inputs/SearchSelectInput'
+import { MasterField } from '../../types/akun.type'
 
 interface Props {
   master: {
-    statusRumah: MasterField[];
-  };
+    statusRumah: MasterField[]
+  }
 }
 
 export default function AddressFields({ master }: Props) {
-
-const statusRumahOptions =
+  const statusRumahOptions =
     master.statusRumah?.map((item) => ({
       label: item.Description,
       value: item.Value,
-    })) ?? [];  
+    })) ?? []
 
   return (
     <div className="mb-8">
@@ -29,23 +28,21 @@ const statusRumahOptions =
 
       <FormInput label="Alamat Lengkap" placeholder="Jl. Kenari Indah No.23" />
 
-      <SearchSelectInput
-            label="Status Rumah"
-            options={statusRumahOptions}
-          />
+      <SearchSelectInput label="Status Rumah" options={statusRumahOptions} />
 
       <RadioInput
-              label="Alamat Tempat Tinggal"
-              name="npwp_status"
-              options={[
-                { label: "Sama Dengan Alamat Identitas", value: "yes" },
-                { label: "Alamat Surat Menyurat", value: "no" },
-              ]}
-            />
+        label="Alamat Tempat Tinggal"
+        name="npwp_status"
+        options={[
+          { label: 'Sama Dengan Alamat Identitas', value: 'yes' },
+          { label: 'Alamat Surat Menyurat', value: 'no' },
+        ]}
+      />
 
-      <FormInput label="Alamat Surat Menyurat" placeholder="Alamat Sesuai Identitas" />
-
-
+      <FormInput
+        label="Alamat Surat Menyurat"
+        placeholder="Alamat Sesuai Identitas"
+      />
     </div>
-  );
+  )
 }

@@ -1,42 +1,42 @@
-import FormInput from "@/features/akun/components/FormInput";
-import RadioInput from "../inputs/RadioInput";
-import DateInput from "../inputs/DateInput";
-import SearchSelectInput from "../inputs/SearchSelectInput";
-import { MasterField } from "../../types/akun.type";
+import FormInput from '@/features/akun/components/FormInput'
+import RadioInput from '../inputs/RadioInput'
+import DateInput from '../inputs/DateInput'
+import SearchSelectInput from '../inputs/SearchSelectInput'
+import { MasterField } from '../../types/akun.type'
 
 interface Props {
   master: {
-    jenisKelamin: MasterField[];
-    agama: MasterField[];
-    statusPerkawinan: MasterField[];
-  };
+    jenisKelamin: MasterField[]
+    agama: MasterField[]
+    statusPerkawinan: MasterField[]
+  }
 }
 
-export default function PersonalInfoFields({ master }: Props) { 
-
+export default function PersonalInfoFields({ master }: Props) {
   const genderOptions =
     master.jenisKelamin?.map((item) => ({
       label: item.Description,
       value: item.Value,
-    })) ?? [];
+    })) ?? []
 
   const agamaOptions =
-  master.agama?.map((item) => ({
-    label: item.Description,
-    value: item.Value,
-  })) ?? []
+    master.agama?.map((item) => ({
+      label: item.Description,
+      value: item.Value,
+    })) ?? []
 
   const statusPerkawinanOptions =
-  master.statusPerkawinan?.map((item) => ({
-    label: item.Description,
-    value: item.Value,
-  })) ?? []
+    master.statusPerkawinan?.map((item) => ({
+      label: item.Description,
+      value: item.Value,
+    })) ?? []
 
   return (
     <div className="mb-8">
       <h2 className="text-base font-semibold">Perubahan Data Pribadi</h2>
       <label>Lengkapi data diri anda sesuai KTP.</label>
-      <br /><br />
+      <br />
+      <br />
 
       <FormInput
         label="Kode Referal / Kode Sales (Jika ada)"
@@ -55,8 +55,8 @@ export default function PersonalInfoFields({ master }: Props) {
         label="Sudah Punya NPWP?"
         name="npwp_status"
         options={[
-          { label: "Sudah", value: "yes" },
-          { label: "Belum", value: "no" },
+          { label: 'Sudah', value: 'yes' },
+          { label: 'Belum', value: 'no' },
         ]}
       />
 
@@ -66,16 +66,9 @@ export default function PersonalInfoFields({ master }: Props) {
 
       <DateInput label="Tanggal Lahir" required />
 
-      <SearchSelectInput
-      label="Jenis Kelamin"
-      options={genderOptions}
-    />
+      <SearchSelectInput label="Jenis Kelamin" options={genderOptions} />
 
-      <SearchSelectInput
-        label="Agama"
-        required
-        options={agamaOptions}
-      />
+      <SearchSelectInput label="Agama" required options={agamaOptions} />
 
       <SearchSelectInput
         label="Status Perkawinan"
@@ -89,12 +82,12 @@ export default function PersonalInfoFields({ master }: Props) {
         label="Pendidikan"
         required
         options={[
-          { label: "SD", value: "w" },
-          { label: "SMP ", value: "x" },
-          { label: "SMA/SMk ", value: "r" },
-          { label: "Sarjana ", value: "t" },
+          { label: 'SD', value: 'w' },
+          { label: 'SMP ', value: 'x' },
+          { label: 'SMA/SMk ', value: 'r' },
+          { label: 'Sarjana ', value: 't' },
         ]}
       />
     </div>
-  );
+  )
 }
