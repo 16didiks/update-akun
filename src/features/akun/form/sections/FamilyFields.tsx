@@ -11,7 +11,7 @@ interface Props {
 export default function FamilyFields({ master }: Props) {
   const hubunganOptions =
     master.hubungan?.map((item) => ({
-      label: item.Description,
+      label: item.FieldNameDt,
       value: item.Value,
     })) ?? []
 

@@ -1,34 +1,67 @@
-import FormInput from "@/features/akun/components/FormInput";
-import SelectInput from "../inputs/SelectInput";
-import RadioInput from "../inputs/RadioInput";
+import FormInput from '@/features/akun/components/FormInput'
+import SearchSelectInput from '../inputs/SearchSelectInput'
+import { MasterField } from '../../types/akun.type'
 
-export default function BeneficialOwnerFields() {
+interface Props {
+  master: {
+    pemilikAsset: MasterField[]
+    jenisKelamin: MasterField[]
+    jenisPenerimaManfaat: MasterField[]
+    hubunganBo: MasterField[]
+    statusPerkawinan: MasterField[]
+  }
+}
+
+export default function BeneficialOwnerFields({ master }: Props) {
+  const pemilikAssetOptions =
+    master.pemilikAsset?.map((item) => ({
+      label: item.FieldNameDt,
+      value: item.Value,
+    })) ?? []
+
+  const genderOptions =
+    master.jenisKelamin?.map((item) => ({
+      label: item.FieldNameDt,
+      value: item.Value,
+    })) ?? []
+
+  const jenisPenerimaManfaatOptions =
+    master.jenisPenerimaManfaat?.map((item) => ({
+      label: item.FieldNameDt,
+      value: item.Value,
+    })) ?? []
+
+  const hubunganBoOptions =
+    master.hubunganBo?.map((item) => ({
+      label: item.FieldNameDt,
+      value: item.Value,
+    })) ?? []
+
+  const statusPerkawinanOptions =
+    master.statusPerkawinan?.map((item) => ({
+      label: item.FieldNameDt,
+      value: item.Value,
+    })) ?? []
+
   return (
     <div className="mb-8">
-
       <h2 className="text-base font-semibold mb-4">
         Informasi Beneficial Owner
       </h2>
 
-      <SelectInput
+      <SearchSelectInput
         label="Pemilik Manfaat"
-        options={[
-          { label: "Diri Sendiri", value: "self" },
-          { label: "Pihak Lain", value: "other" },
-        ]}
+        options={pemilikAssetOptions}
       />
 
-      <SelectInput
+      <SearchSelectInput
         label="Jenis Pemilik Manfaat"
-        options={[
-          { label: "Perorangan", value: "personal" },
-          { label: "Perusahaan", value: "company" },
-        ]}
+        options={jenisPenerimaManfaatOptions}
       />
 
-      <FormInput
-        label="Hubungan dengan pemilik manfaat"
-        placeholder="Wali"
+      <SearchSelectInput
+        label="Hubungan Dengan Pemilik Manfaat"
+        options={hubunganBoOptions}
       />
 
       <FormInput label="No. E-KTP" placeholder="3171xxxxxxxxxxxx" />
@@ -45,33 +78,14 @@ export default function BeneficialOwnerFields() {
 
       <FormInput label="Tanggal Lahir" placeholder="YYYY-MM-DD" />
 
-      <SelectInput
-        label="Jenis Kelamin"
-        options={[
-          { label: "Pria", value: "male" },
-          { label: "Perempuan", value: "female" },
-        ]}
-      />
+      <SearchSelectInput label="Jenis Kelamin" options={genderOptions} />
 
-      <SelectInput
+      <SearchSelectInput
         label="Status Perkawinan"
-        options={[
-          { label: "Belum Kawin", value: "single" },
-          { label: "Kawin", value: "married" },
-        ]}
+        options={statusPerkawinanOptions}
       />
 
       <FormInput label="Kartu Keluarga" placeholder="Upload dokumen" />
-
-      <RadioInput
-        label="Alamat Pemilik Manfaat"
-        name="alamat_bo"
-        options={[
-          { label: "Sama dengan alamat identitas", value: "same" },
-          { label: "Alamat lain", value: "other" },
-        ]}
-      />
-
     </div>
-  );
+  )
 }

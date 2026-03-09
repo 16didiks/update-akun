@@ -44,15 +44,15 @@ export default function EditAkunForm() {
       case 4:
         return <JobFields master={master} />
       case 5:
-        return <BeneficialOwnerFields />
+        return <BeneficialOwnerFields master={master} />
       case 6:
-        return <BeneficialOwnerAddressFields />
+        return <BeneficialOwnerAddressFields master={master} />
       case 7:
         return <KtpUploadFields />
       case 8:
         return <SignatureFields />
       case 9:
-        return <BankFields />
+        return <BankFields master={master} />
       default:
         return null
     }

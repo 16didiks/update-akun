@@ -1,5 +1,4 @@
 import FormInput from '@/features/akun/components/FormInput'
-import RadioInput from '../inputs/RadioInput'
 import DateInput from '../inputs/DateInput'
 import SearchSelectInput from '../inputs/SearchSelectInput'
 import { MasterField } from '../../types/akun.type'
@@ -9,24 +8,31 @@ interface Props {
     jenisKelamin: MasterField[]
     agama: MasterField[]
     statusPerkawinan: MasterField[]
+    alasanNpwp: MasterField[]
   }
 }
 
 export default function PersonalInfoFields({ master }: Props) {
   const genderOptions =
     master.jenisKelamin?.map((item) => ({
-      label: item.Description,
+      label: item.FieldNameDt,
       value: item.Value,
     })) ?? []
 
   const agamaOptions =
     master.agama?.map((item) => ({
-      label: item.Description,
+      label: item.FieldNameDt,
       value: item.Value,
     })) ?? []
 
   const statusPerkawinanOptions =
     master.statusPerkawinan?.map((item) => ({
+      label: item.FieldNameDt,
+      value: item.Value,
+    })) ?? []
+
+  const alasanNpwpOptions =
+    master.alasanNpwp?.map((item) => ({
       label: item.Description,
       value: item.Value,
     })) ?? []
@@ -51,13 +57,9 @@ export default function PersonalInfoFields({ master }: Props) {
 
       <FormInput label="Nama lengkap sesuai KTP" placeholder="Jhon" required />
 
-      <RadioInput
+      <SearchSelectInput
         label="Sudah Punya NPWP?"
-        name="npwp_status"
-        options={[
-          { label: 'Sudah', value: 'yes' },
-          { label: 'Belum', value: 'no' },
-        ]}
+        options={alasanNpwpOptions}
       />
 
       <FormInput label="No. NPWP" placeholder="456.646.xxx.xx.xxx" required />

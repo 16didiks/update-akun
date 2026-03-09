@@ -1,19 +1,86 @@
-import FormInput from "@/features/akun/components/FormInput";
-import TextAreaInput from "../inputs/TextAreaInput";
-import RadioInput from "../inputs/RadioInput";
+import FormInput from '@/features/akun/components/FormInput'
+import TextAreaInput from '../inputs/TextAreaInput'
+import SearchSelectInput from '../inputs/SearchSelectInput'
+import { MasterField } from '../../types/akun.type'
+import { useAddress } from '../../hooks/useAddress'
 
+interface Props {
+  master: {
+    jabatan: MasterField[]
+    bidangUsaha: MasterField[]
+    penghasilanPo: MasterField[]
+    alamatSurat: MasterField[]
+  }
+}
 
-export default function BeneficialOwnerAddressFields() {
+export default function BeneficialOwnerAddressFields({ master }: Props) {
+  // ===== MASTER OPTIONS =====
+
+  const jabatanOptions =
+    master.jabatan?.map((item) => ({
+      label: item.FieldNameDt,
+      value: item.Value,
+    })) ?? []
+
+  const bidangUsahaOptions =
+    master.bidangUsaha?.map((item) => ({
+      label: item.FieldNameDt,
+      value: item.Value,
+    })) ?? []
+
+  const penghasilanPoOptions =
+    master.penghasilanPo?.map((item) => ({
+      label: item.FieldNameDt,
+      value: item.Value,
+    })) ?? []
+
+  const alamatSuratOptions =
+    master.alamatSurat?.map((item) => ({
+      label: item.FieldNameDt,
+      value: item.Value,
+    })) ?? []
+
+  // ===== ADDRESS OPTIONS =====
+
+  const {
+    provinsi,
+    kotaKab,
+    kecamatan,
+    kelurahan,
+    fetchKotaKab,
+    fetchKecamatan,
+    fetchKelurahan,
+  } = useAddress()
+
+  const provinsiOptions =
+    provinsi?.map((item) => ({
+      label: item.Nama,
+      value: item.Id,
+    })) ?? []
+
+  const kotaOptions =
+    kotaKab?.map((item) => ({
+      label: item.Nama,
+      value: item.Id,
+    })) ?? []
+
+  const kecamatanOptions =
+    kecamatan?.map((item) => ({
+      label: item.Nama,
+      value: item.Id,
+    })) ?? []
+
+  const kelurahanOptions =
+    kelurahan?.map((item) => ({
+      label: item.Nama,
+      value: item.Id,
+    })) ?? []
+
   return (
     <div className="mb-8">
-
-        <RadioInput
+      <SearchSelectInput
         label="Alamat Pemilik Manfaat"
-        name="alamat_bo"
-        options={[
-          { label: "Sama dengan alamat identitas", value: "same" },
-          { label: "Alamat lain", value: "other" },
-        ]}
+        options={alamatSuratOptions}
       />
 
       {/* ================= */}
@@ -26,9 +93,9 @@ export default function BeneficialOwnerAddressFields() {
 
       <FormInput label="Pekerjaan" placeholder="Dokter" />
 
-      <FormInput label="Jabatan" placeholder="Manajer" />
+      <SearchSelectInput label="Jabatan" options={jabatanOptions} />
 
-      <FormInput label="Bidang Usaha" placeholder="Pertanian" />
+      <SearchSelectInput label="Bidang Usaha" options={bidangUsahaOptions} />
 
       <FormInput label="Nama Perusahaan" placeholder="PT Kagak" />
 
@@ -42,13 +109,25 @@ export default function BeneficialOwnerAddressFields() {
         Alamat Kantor Pemilik Manfaat
       </h3>
 
-      <FormInput label="Provinsi" placeholder="Kalimantan Barat" />
+      <SearchSelectInput
+        label="Provinsi"
+        options={provinsiOptions}
+        onChange={(val) => fetchKotaKab(val as string)}
+      />
 
-      <FormInput label="Kabupaten / Kota" placeholder="Kapuas Hulu" />
+      <SearchSelectInput
+        label="Kabupaten / Kota"
+        options={kotaOptions}
+        onChange={(val) => fetchKecamatan(val as string)}
+      />
 
-      <FormInput label="Kecamatan" placeholder="Embaloh Hilir" />
+      <SearchSelectInput
+        label="Kecamatan"
+        options={kecamatanOptions}
+        onChange={(val) => fetchKelurahan(val as string)}
+      />
 
-      <FormInput label="Kelurahan" placeholder="Ujung Bayur" />
+      <SearchSelectInput label="Kelurahan" options={kelurahanOptions} />
 
       <FormInput label="Kode Pos" placeholder="78754" />
 
@@ -57,16 +136,12 @@ export default function BeneficialOwnerAddressFields() {
         <FormInput label="RW" placeholder="03" />
       </div>
 
-      <TextAreaInput
-        label="Alamat"
-        placeholder="Masukkan alamat lengkap"
-      />
+      <TextAreaInput label="Alamat" placeholder="Masukkan alamat lengkap" />
 
-      <FormInput
+      <SearchSelectInput
         label="Penghasilan Pokok Pertahun"
-        placeholder="Kurang dari Rp. 10.000.000"
+        options={penghasilanPoOptions}
       />
-
     </div>
-  );
+  )
 }

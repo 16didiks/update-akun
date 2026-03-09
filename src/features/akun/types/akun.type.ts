@@ -17,3 +17,27 @@ export interface MasterDataResponse {
     [key: string]: MasterField[]
   }
 }
+
+export interface Provinsi {
+  Id: string
+  Nama: string
+}
+
+export interface KotaKab {
+  Id: string
+  IdProvinsi: string
+  Nama: string
+}
+
+export interface Kecamatan {
+  Id: string
+  IdKotaKab: string
+  Nama: string
+}
+
+export interface Kelurahan {
+  Id: string
+  IdKecamatan: string
+  Nama: string
+  KodePos: string
+}
