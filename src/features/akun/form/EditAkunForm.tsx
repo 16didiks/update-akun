@@ -10,6 +10,9 @@ import JobFields from './sections/JobFields'
 import BankFields from './sections/BankFields'
 import { useMasterData } from '../hooks/useMasterData'
 
+import { useSearchParams } from 'next/navigation'
+import { useAkun } from '../hooks/useAkun'
+
 import ImportantInfoModal from './modals/ImportantInfoModal'
 import VerificationMethodModal from './modals/VerificationMethodModal'
 import OTPModal from './modals/OTPModal'
@@ -18,6 +21,8 @@ import BeneficialOwnerFields from './sections/BeneficialOwnerFields'
 import BeneficialOwnerAddressFields from './sections/BeneficialOwnerAddressFields'
 import KtpUploadFields from './sections/KtpUploadFields'
 import SignatureFields from './sections/SignatureFields'
+
+type FormState = Record<string, string | string[] | File | null>
 
 export default function EditAkunForm() {
   const [showImportant, setShowImportant] = useState(false)
@@ -33,26 +38,99 @@ export default function EditAkunForm() {
 
   const master = useMasterData()
 
+  const searchParams = useSearchParams()
+  const p1 = searchParams.get('p1') || ''
+
+  const { data: user } = useAkun(p1)
+
+  console.log('USER DATA', user)
+
+  // 🔵 STATE FORM GLOBAL
+  const [form, setForm] = useState<FormState>({})
+
+  // 🔵 HANDLE CHANGE FIELD
+  const handleChange = (
+    field: string,
+    value: string | string[] | File | null,
+  ) => {
+    setForm((prev) => ({
+      ...prev,
+      [field]: value,
+    }))
+  }
+
   const renderStep = () => {
     switch (step) {
       case 1:
-        return <PersonalInfoFields master={master} />
+        return (
+          <PersonalInfoFields
+            master={master}
+            data={user}
+            form={form}
+            onChange={handleChange}
+          />
+        )
+
       case 2:
-        return <AddressFields master={master} />
+        return (
+          <AddressFields
+            master={master}
+            data={user}
+            form={form}
+            onChange={handleChange}
+          />
+        )
+
       case 3:
-        return <FamilyFields master={master} />
+        return (
+          <FamilyFields
+            master={master}
+            data={user}
+            form={form}
+            onChange={handleChange}
+          />
+        )
+
       case 4:
-        return <JobFields master={master} />
+        return (
+          <JobFields
+            master={master}
+            data={user}
+            form={form}
+            onChange={handleChange}
+          />
+        )
+
       case 5:
-        return <BeneficialOwnerFields master={master} />
-      case 6:
-        return <BeneficialOwnerAddressFields master={master} />
-      case 7:
-        return <KtpUploadFields />
-      case 8:
-        return <SignatureFields />
-      case 9:
-        return <BankFields master={master} />
+        return (
+          <BeneficialOwnerFields
+            data={user}
+            master={master}
+            form={form}
+            onChange={handleChange}
+          />
+        )
+
+      // case 6:
+      //   return (
+      //     <BeneficialOwnerAddressFields
+      //       master={master}
+      //       form={form}
+      //       onChange={handleChange}
+      //     />
+      //   )
+
+      // case 7:
+      //   return <KtpUploadFields form={form} onChange={handleChange} />
+
+      // case 8:
+      //   return <SignatureFields form={form} onChange={handleChange} />
+
+      // case 9:
+      //   return (
+      //     <BankFields master={master} form={form} onChange={handleChange} />
+      //   )
+
       default:
         return null
     }

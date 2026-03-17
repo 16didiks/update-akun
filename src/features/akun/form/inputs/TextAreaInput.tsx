@@ -1,24 +1,30 @@
 interface Props {
-  label: string;
-  placeholder?: string;
-  required?: boolean;
+  label: string
+  placeholder?: string
+  required?: boolean
+  value?: string
+  onChange?: (value: string) => void
 }
 
 export default function TextAreaInput({
   label,
   placeholder,
   required,
+  value = '',
+  onChange,
 }: Props) {
   return (
     <div className="mb-6">
       <label className="block text-sm text-gray-700 mb-1">
         {label}
-                {required && <span className="text-red-500 ml-1">*</span>}
+        {required && <span className="text-red-500 ml-1">*</span>}
       </label>
 
       <textarea
         rows={3}
         placeholder={placeholder}
+        value={value}
+        onChange={(e) => onChange?.(e.target.value)}
         className="
           w-full
           border border-gray-300
@@ -32,5 +38,5 @@ export default function TextAreaInput({
         "
       />
     </div>
-  );
+  )
 }

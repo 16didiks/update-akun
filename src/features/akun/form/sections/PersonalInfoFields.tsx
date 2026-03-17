@@ -1,7 +1,9 @@
-import FormInput from '@/features/akun/components/FormInput'
+import TextInput from '../inputs/TextInput'
 import DateInput from '../inputs/DateInput'
 import SearchSelectInput from '../inputs/SearchSelectInput'
-import { MasterField } from '../../types/akun.type'
+import { MasterField, UserUpdate } from '../../types/akun.type'
+
+type FormState = Record<string, string | string[] | File | null>
 
 interface Props {
   master: {
@@ -9,10 +11,22 @@ interface Props {
     agama: MasterField[]
     statusPerkawinan: MasterField[]
     alasanNpwp: MasterField[]
+    pendidikan: MasterField[]
   }
+
+  data: UserUpdate | null
+
+  form: FormState
+
+  onChange: (field: string, value: string | string[] | File | null) => void
 }
 
-export default function PersonalInfoFields({ master }: Props) {
+export default function PersonalInfoFields({
+  master,
+  data,
+  form,
+  onChange,
+}: Props) {
   const genderOptions =
     master.jenisKelamin?.map((item) => ({
       label: item.FieldNameDt,
@@ -37,6 +51,12 @@ export default function PersonalInfoFields({ master }: Props) {
       value: item.Value,
     })) ?? []
 
+  const pendidikanOptions =
+    master.pendidikan?.map((item) => ({
+      label: item.Description,
+      value: item.Value,
+    })) ?? []
+
   return (
     <div className="mb-8">
       <h2 className="text-base font-semibold">Perubahan Data Pribadi</h2>
@@ -44,51 +64,109 @@ export default function PersonalInfoFields({ master }: Props) {
       <br />
       <br />
 
-      <FormInput
+      <TextInput
         label="Kode Referal / Kode Sales (Jika ada)"
-        placeholder="12345"
+        placeholder=""
+        value={(form.ReferralCode as string) || data?.ReferralCode || ''}
+        onChange={(v) => onChange('ReferralCode', v)}
       />
 
-      <FormInput label="Email" placeholder="email@gmail.com" />
+      <TextInput
+        label="Email"
+        placeholder=""
+        value={(form.AlamatEmail as string) || data?.AlamatEmail || ''}
+        onChange={(v) => onChange('AlamatEmail', v)}
+      />
 
-      <FormInput label="Nomor Handphone" placeholder="0852.xxxx.xxxx" />
+      <TextInput
+        label="Nomor Handphone"
+        placeholder=""
+        value={(form.NoHandphone as string) || data?.NoHandphone || ''}
+        onChange={(v) => onChange('NoHandphone', v)}
+      />
 
-      <FormInput label="No. E-KTP" placeholder="1712xxxxxxxxxx4" />
+      <TextInput
+        label="No. E-KTP"
+        placeholder=""
+        value={(form.NoIdentitas as string) || data?.NoIdentitas || ''}
+        onChange={(v) => onChange('NoIdentitas', v)}
+      />
 
-      <FormInput label="Nama lengkap sesuai KTP" placeholder="Jhon" required />
+      <TextInput
+        label="Nama lengkap sesuai KTP"
+        placeholder=""
+        required
+        value={(form.NamaLengkap as string) || data?.NamaLengkap || ''}
+        onChange={(v) => onChange('NamaLengkap', v)}
+      />
 
       <SearchSelectInput
         label="Sudah Punya NPWP?"
         options={alasanNpwpOptions}
+        value={(form.AlasanNpwp as string) || data?.AlasanNpwp || ''}
+        onChange={(v) => onChange('AlasanNpwp', v)}
       />
 
-      <FormInput label="No. NPWP" placeholder="456.646.xxx.xx.xxx" required />
+      <TextInput
+        label="No. NPWP"
+        placeholder=""
+        value={(form.npwp as string) || data?.Npwp || ''}
+        onChange={(v) => onChange('npwp', v)}
+      />
 
-      <FormInput label="Tempat Lahir" placeholder="Jakarta" required />
+      <TextInput
+        label="Tempat Lahir"
+        placeholder=""
+        required
+        value={(form.TempatLahir as string) || data?.TempatLahir || ''}
+        onChange={(v) => onChange('TempatLahir', v)}
+      />
 
-      <DateInput label="Tanggal Lahir" required />
+      <DateInput
+        label="Tanggal Lahir"
+        required
+        value={(form.TanggalLahir as string) || data?.TanggalLahir || ''}
+        onChange={(v) => onChange('TanggalLahir', v)}
+      />
 
-      <SearchSelectInput label="Jenis Kelamin" options={genderOptions} />
+      <SearchSelectInput
+        label="Jenis Kelamin"
+        options={genderOptions}
+        value={(form.JenisKelamin as string) || data?.JenisKelamin || ''}
+        onChange={(v) => onChange('JenisKelamin', v)}
+      />
 
-      <SearchSelectInput label="Agama" required options={agamaOptions} />
+      <SearchSelectInput
+        label="Agama"
+        required
+        options={agamaOptions}
+        value={(form.Agama as string) || data?.Agama || ''}
+        onChange={(v) => onChange('Agama', v)}
+      />
 
       <SearchSelectInput
         label="Status Perkawinan"
         required
         options={statusPerkawinanOptions}
+        value={(form.StatusKawin as string) || data?.StatusKawin || ''}
+        onChange={(v) => onChange('StatusKawin', v)}
       />
 
-      <FormInput label="Nama Ibu Kandung" placeholder="Mora" required />
+      <TextInput
+        label="Nama Ibu Kandung"
+        placeholder=""
+        required
+        value={(form.NamaLengkapIbu as string) || data?.NamaLengkapIbu || ''}
+        onChange={(v) => onChange('NamaLengkapIbu', v)}
+      />
 
       <SearchSelectInput
         label="Pendidikan"
-        required
-        options={[
-          { label: 'SD', value: 'w' },
-          { label: 'SMP ', value: 'x' },
-          { label: 'SMA/SMk ', value: 'r' },
-          { label: 'Sarjana ', value: 't' },
-        ]}
+        options={pendidikanOptions}
+        value={
+          (form.PendidikanTerakhir as string) || data?.PendidikanTerakhir || ''
+        }
+        onChange={(v) => onChange('PendidikanTerakhir', v)}
       />
     </div>
   )

@@ -1,16 +1,24 @@
-import FormInput from '@/features/akun/components/FormInput'
+import TextInput from '../inputs/TextInput'
 import SearchSelectInput from '../inputs/SearchSelectInput'
-import { MasterField } from '../../types/akun.type'
+import { MasterField, UserUpdate } from '../../types/akun.type'
+
+type FormState = Record<string, string | string[] | File | null>
 
 interface Props {
   master: {
-    hubungan: MasterField[]
+    statusRumah: MasterField[]
   }
+
+  data: UserUpdate | null
+
+  form: FormState
+
+  onChange: (field: string, value: string | string[] | File | null) => void
 }
 
-export default function FamilyFields({ master }: Props) {
-  const hubunganOptions =
-    master.hubungan?.map((item) => ({
+export default function FamilyFields({ master, data, form, onChange }: Props) {
+  const statusRumahOptions =
+    master.statusRumah?.map((item) => ({
       label: item.FieldNameDt,
       value: item.Value,
     })) ?? []
@@ -21,11 +29,34 @@ export default function FamilyFields({ master }: Props) {
         Data Pasangan / Orang Tua
       </h2>
 
-      <SearchSelectInput label="Status Rumah" options={hubunganOptions} />
+      <SearchSelectInput
+        label="Status Rumah"
+        options={statusRumahOptions}
+        value={(form.StatusRumah as string) || data?.StatusRumah || ''}
+        onChange={(v) => onChange('StatusRumah', v)}
+      />
 
-      <FormInput label="Nama Lengkap" placeholder="Mora" />
+      <TextInput
+        label="Nama Lengkap"
+        placeholder=""
+        value={
+          (form.KeluargaNamaLengkap as string) ||
+          data?.KeluargaNamaLengkap ||
+          ''
+        }
+        onChange={(v) => onChange('KeluargaNamaLengkap', v)}
+      />
 
-      <FormInput label="Nomor Handphone" placeholder="0852.xxxx.xxxx" />
+      <TextInput
+        label="Nomor Handphone"
+        placeholder=""
+        value={
+          (form.KeluargaNoHandphone as string) ||
+          data?.KeluargaNoHandphone ||
+          ''
+        }
+        onChange={(v) => onChange('KeluargaNoHandphone', v)}
+      />
     </div>
   )
 }

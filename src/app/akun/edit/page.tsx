@@ -1,5 +1,11 @@
-import EditAkunForm from "@/features/akun/form/EditAkunForm";
+'use client'
 
-export default function EditAkunPage() {
-  return <EditAkunForm />;
+import EditAkunForm from '@/features/akun/form/EditAkunForm'
+
+export default function Page() {
+  return (
+    <div>
+      <EditAkunForm />
+    </div>
+  )
 }

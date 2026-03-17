@@ -22,6 +22,7 @@ export const useMasterData = () => {
   const [alamatSurat, setAlamatSurat] = useState<MasterField[]>([])
   const [alasanNpwp, setAlasanNpwp] = useState<MasterField[]>([])
   const [bankAkhirNew, setBankAkhirNew] = useState<MasterField[]>([])
+  const [pendidikan, setPendidikan] = useState<MasterField[]>([])
 
   useEffect(() => {
     const loadMaster = async () => {
@@ -46,6 +47,7 @@ export const useMasterData = () => {
         setAlamatSurat(res?.OasStandardField?.AlamatSurat ?? [])
         setAlasanNpwp(res?.OasStandardField?.AlasanNpwp ?? [])
         setBankAkhirNew(res?.OasStandardField?.BankAkhirNew ?? [])
+        setPendidikan(res?.OasStandardField?.Pendidikan ?? [])
       } catch (err) {
         console.error('Master data error', err)
       }
@@ -71,5 +73,6 @@ export const useMasterData = () => {
     alamatSurat,
     alasanNpwp,
     bankAkhirNew,
+    pendidikan,
   }
 }

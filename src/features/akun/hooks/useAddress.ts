@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 import {
   getProvinsi,
   getKotaKab,
@@ -36,17 +36,15 @@ export const useAddress = () => {
     }
   }
 
-  const fetchKotaKab = async (provId: string) => {
+  const fetchKotaKab = useCallback(async (provId: string) => {
     try {
       setLoadingKota(true)
 
-      // reset child dropdown
       setKotaKab([])
       setKecamatan([])
       setKelurahan([])
 
       const encrypted = await encryptParam(provId)
-
       const res = await getKotaKab(encrypted)
 
       setKotaKab(res?.MstKotaKab ?? [])
@@ -55,18 +53,16 @@ export const useAddress = () => {
     } finally {
       setLoadingKota(false)
     }
-  }
+  }, [])
 
-  const fetchKecamatan = async (kotaId: string) => {
+  const fetchKecamatan = useCallback(async (kotaId: string) => {
     try {
       setLoadingKecamatan(true)
 
-      // reset child dropdown
       setKecamatan([])
       setKelurahan([])
 
       const encrypted = await encryptParam(kotaId)
-
       const res = await getKecamatan(encrypted)
 
       setKecamatan(res?.MstKecamatan ?? [])
@@ -75,16 +71,15 @@ export const useAddress = () => {
     } finally {
       setLoadingKecamatan(false)
     }
-  }
+  }, [])
 
-  const fetchKelurahan = async (kecId: string) => {
+  const fetchKelurahan = useCallback(async (kecId: string) => {
     try {
       setLoadingKelurahan(true)
 
       setKelurahan([])
 
       const encrypted = await encryptParam(kecId)
-
       const res = await getKelurahan(encrypted)
 
       setKelurahan(res?.MstKelurahan ?? [])
@@ -93,7 +88,7 @@ export const useAddress = () => {
     } finally {
       setLoadingKelurahan(false)
     }
-  }
+  }, [])
 
   useEffect(() => {
     if (fetched.current) return

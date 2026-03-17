@@ -13,6 +13,7 @@ interface Props {
   isMulti?: boolean
   placeholder?: string
   required?: boolean
+  value?: string | string[]
   onChange?: (value: string | string[]) => void
 }
 
@@ -22,6 +23,7 @@ export default function SearchSelectInput({
   isMulti = false,
   placeholder = 'Pilih...',
   required = false,
+  value,
   onChange,
 }: Props) {
   const handleChange = (selected: SingleValue<Option> | MultiValue<Option>) => {
@@ -38,6 +40,11 @@ export default function SearchSelectInput({
     onChange(single?.value ?? '')
   }
 
+  // convert value -> option
+  const selectedValue = isMulti
+    ? options.filter((opt) => (value as string[])?.includes(opt.value))
+    : options.find((opt) => opt.value === value)
+
   return (
     <div className="mb-6">
       <label className="block text-sm text-gray-700 mb-1">
@@ -49,6 +56,7 @@ export default function SearchSelectInput({
         instanceId={label}
         options={options}
         isMulti={isMulti}
+        value={selectedValue}
         placeholder={placeholder}
         className="text-sm"
         onChange={handleChange}

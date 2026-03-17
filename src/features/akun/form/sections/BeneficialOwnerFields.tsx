@@ -1,6 +1,8 @@
-import FormInput from '@/features/akun/components/FormInput'
+import TextInput from '../inputs/TextInput'
 import SearchSelectInput from '../inputs/SearchSelectInput'
-import { MasterField } from '../../types/akun.type'
+import { MasterField, UserUpdate } from '../../types/akun.type'
+
+type FormState = Record<string, string | string[] | File | null>
 
 interface Props {
   master: {
@@ -10,9 +12,20 @@ interface Props {
     hubunganBo: MasterField[]
     statusPerkawinan: MasterField[]
   }
+
+  data: UserUpdate | null
+
+  form: FormState
+
+  onChange: (field: string, value: string | string[] | File | null) => void
 }
 
-export default function BeneficialOwnerFields({ master }: Props) {
+export default function BeneficialOwnerFields({
+  master,
+  data,
+  form,
+  onChange,
+}: Props) {
   const pemilikAssetOptions =
     master.pemilikAsset?.map((item) => ({
       label: item.FieldNameDt,
@@ -52,40 +65,116 @@ export default function BeneficialOwnerFields({ master }: Props) {
       <SearchSelectInput
         label="Pemilik Manfaat"
         options={pemilikAssetOptions}
+        value={
+          (form.PemilikAsset as string) ||
+          (data?.PemilikAsset !== undefined ? String(data.PemilikAsset) : '')
+        }
+        onChange={(v) => onChange('LamaBekerjaBulan', v)}
       />
 
       <SearchSelectInput
         label="Jenis Pemilik Manfaat"
         options={jenisPenerimaManfaatOptions}
+        value={
+          (form.PenerimaManfaat as string) ||
+          (data?.PenerimaManfaat !== undefined
+            ? String(data.PenerimaManfaat)
+            : '')
+        }
+        onChange={(v) => onChange('PenerimaManfaat', v)}
       />
 
       <SearchSelectInput
         label="Hubungan Dengan Pemilik Manfaat"
         options={hubunganBoOptions}
+        value={
+          (form.StatusHubunganKeluarga as string) ||
+          (data?.StatusHubunganKeluarga !== undefined
+            ? String(data.StatusHubunganKeluarga)
+            : '')
+        }
+        onChange={(v) => onChange('StatusHubunganKeluarga', v)}
       />
 
-      <FormInput label="No. E-KTP" placeholder="3171xxxxxxxxxxxx" />
+      <TextInput
+        label="No. E-KTP"
+        placeholder=""
+        value={(form.NoIdentitas as string) || data?.NoIdentitas || ''}
+        onChange={(v) => onChange('NoIdentitas', v)}
+      />
 
-      <FormInput label="No. NPWP" placeholder="12.345.678.9-012.000" />
+      <TextInput
+        label="No. NPWP"
+        placeholder=""
+        value={(form.Npwp as string) || data?.Npwp || ''}
+        onChange={(v) => onChange('Npwp', v)}
+      />
 
-      <FormInput label="Nama lengkap sesuai KTP" placeholder="Nama lengkap" />
+      <TextInput
+        label="Nama lengkap sesuai KTP"
+        placeholder=""
+        value={(form.NamaLengkap as string) || data?.NamaLengkap || ''}
+        onChange={(v) => onChange('NamaLengkap', v)}
+      />
 
-      <FormInput label="Email" placeholder="email@gmail.com" />
+      <TextInput
+        label="Email"
+        placeholder=""
+        value={(form.email as string) || data?.email || ''}
+        onChange={(v) => onChange('email', v)}
+      />
 
-      <FormInput label="Nomor Handphone" placeholder="0812xxxxxxx" />
+      <TextInput
+        label="Nomor Handphone"
+        placeholder=""
+        value={(form.Hp as string) || data?.Hp || ''}
+        onChange={(v) => onChange('Hp', v)}
+      />
 
-      <FormInput label="Tempat Lahir" placeholder="Jakarta" />
+      <TextInput
+        label="Tempat Lahir"
+        placeholder=""
+        value={(form.TempatLahir as string) || data?.TempatLahir || ''}
+        onChange={(v) => onChange('TempatLahir', v)}
+      />
 
-      <FormInput label="Tanggal Lahir" placeholder="YYYY-MM-DD" />
+      <TextInput
+        label="Tanggal Lahir"
+        placeholder=""
+        value={(form.TanggalLahir as string) || data?.TanggalLahir || ''}
+        onChange={(v) => onChange('TanggalLahir', v)}
+      />
 
-      <SearchSelectInput label="Jenis Kelamin" options={genderOptions} />
+      <SearchSelectInput
+        label="Jenis Kelamin"
+        options={genderOptions}
+        value={
+          (form.JenisKelamin as string) ||
+          (data?.JenisKelamin !== undefined ? String(data.JenisKelamin) : '')
+        }
+        onChange={(v) => onChange('JenisKelamin', v)}
+      />
 
       <SearchSelectInput
         label="Status Perkawinan"
         options={statusPerkawinanOptions}
+        value={
+          (form.StatusKawin as string) ||
+          (data?.StatusKawin !== undefined ? String(data.StatusKawin) : '')
+        }
+        onChange={(v) => onChange('StatusKawin', v)}
       />
 
-      <FormInput label="Kartu Keluarga" placeholder="Upload dokumen" />
+      <TextInput
+        label="Kartu Keluarga"
+        placeholder=""
+        value={
+          (form.KeluargaNoIdentitas as string) ||
+          data?.KeluargaNoIdentitas ||
+          ''
+        }
+        onChange={(v) => onChange('KeluargaNoIdentitas', v)}
+      />
     </div>
   )
 }

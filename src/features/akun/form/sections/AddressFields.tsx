@@ -1,16 +1,25 @@
-import FormInput from '@/features/akun/components/FormInput'
+import { useEffect } from 'react'
 import SearchSelectInput from '../inputs/SearchSelectInput'
-import { MasterField } from '../../types/akun.type'
+import { MasterField, UserUpdate } from '../../types/akun.type'
 import { useAddress } from '../../hooks/useAddress'
+import TextAreaInput from '../inputs/TextAreaInput'
+
+type FormState = Record<string, string | string[] | File | null>
 
 interface Props {
   master: {
     statusRumah: MasterField[]
     alamatSurat: MasterField[]
   }
+
+  data: UserUpdate | null
+
+  form: FormState
+
+  onChange: (field: string, value: string | string[] | File | null) => void
 }
 
-export default function AddressFields({ master }: Props) {
+export default function AddressFields({ master, data, form, onChange }: Props) {
   // ===== MASTER OPTIONS =====
 
   const statusRumahOptions =
@@ -61,6 +70,33 @@ export default function AddressFields({ master }: Props) {
       value: item.Id,
     })) ?? []
 
+  // ===== API ADDRESS =====
+
+  const alamat = data?.AlamatIdentitas
+
+  /**
+   * AUTO LOAD CHAIN DROPDOWN
+   * Untuk kasus edit data
+   */
+
+  useEffect(() => {
+    if (alamat?.Province) {
+      fetchKotaKab(alamat.Province)
+    }
+  }, [alamat?.Province, fetchKotaKab])
+
+  useEffect(() => {
+    if (alamat?.City) {
+      fetchKecamatan(alamat.City)
+    }
+  }, [alamat?.City, fetchKecamatan])
+
+  useEffect(() => {
+    if (alamat?.District) {
+      fetchKelurahan(alamat.District)
+    }
+  }, [alamat?.District, fetchKelurahan])
+
   return (
     <div className="mb-8">
       <h2 className="text-base font-semibold mb-4">Alamat Identitas</h2>
@@ -68,35 +104,89 @@ export default function AddressFields({ master }: Props) {
       <SearchSelectInput
         label="Provinsi"
         options={provinsiOptions}
-        onChange={(val) => fetchKotaKab(val as string)}
+        value={(form.Provinsi as string) || alamat?.Province || ''}
+        onChange={(val) => {
+          if (typeof val === 'string') {
+            onChange('Provinsi', val)
+            fetchKotaKab(val)
+          }
+        }}
       />
 
       <SearchSelectInput
         label="Kabupaten / Kota"
         options={kotaOptions}
-        onChange={(val) => fetchKecamatan(val as string)}
+        value={(form.Kota as string) || alamat?.City || ''}
+        onChange={(val) => {
+          if (typeof val === 'string') {
+            onChange('Kota', val)
+            fetchKecamatan(val)
+          }
+        }}
       />
 
       <SearchSelectInput
         label="Kecamatan"
         options={kecamatanOptions}
-        onChange={(val) => fetchKelurahan(val as string)}
+        value={(form.Kecamatan as string) || alamat?.District || ''}
+        onChange={(val) => {
+          if (typeof val === 'string') {
+            onChange('Kecamatan', val)
+            fetchKelurahan(val)
+          }
+        }}
       />
 
-      <SearchSelectInput label="Kelurahan" options={kelurahanOptions} />
+      <SearchSelectInput
+        label="Kelurahan"
+        options={kelurahanOptions}
+        value={(form.Kelurahan as string) || alamat?.Subdistrict || ''}
+        onChange={(val) => {
+          if (typeof val === 'string') {
+            onChange('Kelurahan', val)
+          }
+        }}
+      />
 
-      <FormInput label="Alamat Lengkap" placeholder="Jl. Kenari Indah No.23" />
+      {/* <TextInput
+        label="Alamat Lengkap"
+        placeholder="Jl. Kenari Indah No.23"
+        value={(form.Alamat as string) || alamat?.Address || ''}
+        onChange={(v) => onChange('Alamat', v)}
+      /> */}
 
-      <SearchSelectInput label="Status Rumah" options={statusRumahOptions} />
+      <TextAreaInput
+        label="Alamat"
+        value={(form.Alamat as string) || alamat?.Address || ''}
+        onChange={(v) => onChange('Alamat', v)}
+      />
+
+      <SearchSelectInput
+        label="Status Rumah"
+        options={statusRumahOptions}
+        value={(form.StatusRumah as string) || data?.StatusRumah || ''}
+        onChange={(v) => {
+          if (typeof v === 'string') onChange('StatusRumah', v)
+        }}
+      />
 
       <SearchSelectInput
         label="Alamat Tempat Tinggal"
         options={alamatSuratOptions}
+        value={
+          (form.AlamatSuratMenyurat as string) ||
+          data?.AlamatSuratMenyurat ||
+          ''
+        }
+        onChange={(v) => {
+          if (typeof v === 'string') onChange('AlamatSuratMenyurat', v)
+        }}
       />
 
-      <FormInput
-        label="Alamat Surat Menyurat"
-        placeholder="Alamat Sesuai Identitas"
+      <TextAreaInput
+        label="Alamat"
+        value={(form.AlamatSuratDetail as string) || data?.Alamat || ''}
+        onChange={(v) => onChange('AlamatSuratDetail', v)}
       />
     </div>
   )

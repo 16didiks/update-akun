@@ -74,3 +74,11 @@ export const getKelurahan = async (encrypted: string) => {
 
   return data
 }
+
+export const getUserUpdate = async (p1: string) => {
+  const response = await axiosInstance.post(
+    `https://supportdev.mncsekuritas.id:30443/ws/api/oas/oasOpeningAccountV2/getUserUpdate?p1=${p1}`,
+  )
+
+  return response.data
+}
