@@ -98,7 +98,6 @@ export default function JobFields({ master, data, form, onChange }: Props) {
 
   /**
    * AUTO LOAD CHAIN DROPDOWN
-   * Untuk kasus edit data
    */
 
   useEffect(() => {

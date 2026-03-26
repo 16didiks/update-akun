@@ -10,8 +10,6 @@ export const useAkun = (p1: string) => {
     try {
       const res = await getUserUpdate(p1)
 
-      console.log('API RESPONSE', res)
-
       setData(res.Result)
     } catch (error) {
       console.error(error)

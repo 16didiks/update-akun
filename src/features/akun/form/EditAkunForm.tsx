@@ -43,8 +43,6 @@ export default function EditAkunForm() {
 
   const { data: user } = useAkun(p1)
 
-  console.log('USER DATA', user)
-
   // 🔵 STATE FORM GLOBAL
   const [form, setForm] = useState<FormState>({})
 
@@ -111,17 +109,18 @@ export default function EditAkunForm() {
           />
         )
 
-      // case 6:
-      //   return (
-      //     <BeneficialOwnerAddressFields
-      //       master={master}
-      //       form={form}
-      //       onChange={handleChange}
-      //     />
-      //   )
+      case 6:
+        return (
+          <BeneficialOwnerAddressFields
+            data={user}
+            master={master}
+            form={form}
+            onChange={handleChange}
+          />
+        )
 
-      // case 7:
-      //   return <KtpUploadFields form={form} onChange={handleChange} />
+      case 7:
+        return <KtpUploadFields form={form} onChange={handleChange} />
 
       // case 8:
       //   return <SignatureFields form={form} onChange={handleChange} />

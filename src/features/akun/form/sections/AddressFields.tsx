@@ -76,7 +76,6 @@ export default function AddressFields({ master, data, form, onChange }: Props) {
 
   /**
    * AUTO LOAD CHAIN DROPDOWN
-   * Untuk kasus edit data
    */
 
   useEffect(() => {

@@ -1,4 +1,28 @@
-export default function KtpUploadFields() {
+'use client'
+
+import { useState } from 'react'
+import CameraInput from '../inputs/CameraInput'
+
+type FormState = Record<string, string | string[] | File | null>
+
+interface Props {
+  form: FormState
+  onChange: (field: string, value: string | string[] | File | null) => void
+}
+
+export default function KtpUploadFields({ form, onChange }: Props) {
+  const [showCamera, setShowCamera] = useState(false)
+  const [preview, setPreview] = useState<string | null>(null)
+
+  const handleCapture = (file: File) => {
+    onChange('KtpFile', file)
+
+    const url = URL.createObjectURL(file)
+    setPreview(url)
+
+    setShowCamera(false)
+  }
+
   return (
     <div className="mb-8">
       <h2 className="text-base font-semibold mb-2">Foto KTP</h2>
@@ -8,27 +32,43 @@ export default function KtpUploadFields() {
         ini:
       </p>
 
-      {/* Preview KTP */}
-      <div className="border rounded-xl p-3 mb-4 flex justify-center">
-        <div className="w-48 h-28 bg-gray-200 rounded-lg flex items-center justify-center">
-          Preview Foto
+      {/* Preview / Camera */}
+      {!showCamera ? (
+        <div className="border rounded-xl p-3 mb-4 flex justify-center">
+          {preview ? (
+            <img src={preview} className="w-48 h-28 object-cover rounded-lg" />
+          ) : (
+            <div className="w-48 h-28 bg-gray-200 rounded-lg flex items-center justify-center">
+              Preview Foto
+            </div>
+          )}
         </div>
-      </div>
+      ) : (
+        <CameraInput onCapture={handleCapture} />
+      )}
 
       {/* Rules */}
-      <div className="text-sm mb-6">
-        <p className="font-semibold mb-2">Pastikan :</p>
+      {!showCamera && (
+        <div className="text-sm mb-6">
+          <p className="font-semibold mb-2">Pastikan :</p>
 
-        <ul className="space-y-1 text-gray-600">
-          <li>✔ Foto terlihat jelas dan dapat dibaca.</li>
-          <li>✔ Foto berada dalam frame kotak.</li>
-          <li>✔ KTP milik Anda pribadi.</li>
-        </ul>
-      </div>
+          <ul className="space-y-1 text-gray-600">
+            <li>✔ Foto terlihat jelas dan dapat dibaca.</li>
+            <li>✔ Foto berada dalam frame kotak.</li>
+            <li>✔ KTP milik Anda pribadi.</li>
+          </ul>
+        </div>
+      )}
 
-      <button className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm">
-        Ambil Ulang Foto KTP
-      </button>
+      {/* Button */}
+      {!showCamera && (
+        <button
+          onClick={() => setShowCamera(true)}
+          className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm w-full"
+        >
+          {preview ? 'Ambil Ulang Foto KTP' : 'Ambil Foto KTP'}
+        </button>
+      )}
     </div>
   )
 }
