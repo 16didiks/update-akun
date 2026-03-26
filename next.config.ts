@@ -1,10 +1,9 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
-/** @type {import('next').NextConfig} */
 const NextConfig = {
   images: {
-    domains: ["randomuser.me"],
+    domains: ['randomuser.me'],
   },
-};
+}
 
-module.exports = NextConfig;
+module.exports = NextConfig
