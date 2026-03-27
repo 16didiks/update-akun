@@ -129,6 +129,7 @@ export interface UserUpdate {
   LamaBekerjaBulan?: number
 
   PemilikAsset?: number
+  BeneficialOwner?: BeneficialOwner
   PenerimaManfaat?: number
   StatusHubunganKeluarga?: string
   KeluargaNoIdentitas?: string
@@ -140,4 +141,40 @@ export interface UserUpdate {
   AlamatDomisili?: Address
   AlamatPekerjaan?: Address
   AlamatKantor?: Address
+}
+
+export interface BeneficialOwner {
+  Id?: string
+  BoType?: string
+  Fullname?: string
+  BirthPlace?: string
+  BirthDate?: string
+  IdentityType?: string
+  IdentityNumber?: string
+  Gender?: string
+  Citizenship?: string
+  Relationship?: string
+  MaritalStatus?: string
+  Occupation?: string
+  JobPosition?: string
+  SourceFund?: string
+  PurposeFund?: string
+
+  Phone_number?: string
+  Mobile_phone?: string
+  Email?: string
+
+  Npwp?: string
+  Npwp_reason?: string
+
+  Industry_name?: string
+  Industry_type?: string
+
+  AddressBo?: Address
+  CompanyAddressBo?: Address
+
+  Company_phone_number?: string
+  Income_per_year?: string
+
+  Active?: boolean
 }

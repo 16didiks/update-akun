@@ -1,11 +1,19 @@
 import CheckboxInput from '../inputs/CheckboxInput'
 import SearchSelectInput from '../inputs/SearchSelectInput'
-import { MasterField } from '../../types/akun.type'
+import { MasterField, UserUpdate } from '../../types/akun.type'
+
+type FormState = Record<string, string | string[] | File | null>
 
 interface Props {
   master: {
     bankAkhirNew: MasterField[]
   }
+
+  data: UserUpdate | null
+
+  form: FormState
+
+  onChange: (field: string, value: string | string[] | File | null) => void
 }
 
 export default function BankAkhirFields({ master }: Props) {

@@ -94,7 +94,7 @@ export default function JobFields({ master, data, form, onChange }: Props) {
 
   // ===== API ADDRESS =====
 
-  const alamat = data?.AlamatPekerjaan
+  const alamat = data?.AlamatPekerjaan || {}
 
   /**
    * AUTO LOAD CHAIN DROPDOWN

@@ -72,7 +72,7 @@ export default function AddressFields({ master, data, form, onChange }: Props) {
 
   // ===== API ADDRESS =====
 
-  const alamat = data?.AlamatIdentitas
+  const alamat = data?.AlamatIdentitas || {}
 
   /**
    * AUTO LOAD CHAIN DROPDOWN

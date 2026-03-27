@@ -1,6 +1,7 @@
 import TextInput from '../inputs/TextInput'
 import SearchSelectInput from '../inputs/SearchSelectInput'
 import { MasterField, UserUpdate } from '../../types/akun.type'
+import DateInput from '../inputs/DateInput'
 
 type FormState = Record<string, string | string[] | File | null>
 
@@ -56,6 +57,8 @@ export default function BeneficialOwnerFields({
       value: item.Value,
     })) ?? []
 
+  const dataBO = data?.BeneficialOwner || {}
+
   return (
     <div className="mb-8">
       <h2 className="text-base font-semibold mb-4">
@@ -99,50 +102,49 @@ export default function BeneficialOwnerFields({
       <TextInput
         label="No. E-KTP"
         placeholder=""
-        value={(form.NoIdentitas as string) || data?.NoIdentitas || ''}
+        value={(form.NoIdentitas as string) || dataBO?.IdentityNumber || ''}
         onChange={(v) => onChange('NoIdentitas', v)}
       />
 
       <TextInput
         label="No. NPWP"
         placeholder=""
-        value={(form.Npwp as string) || data?.Npwp || ''}
+        value={(form.Npwp as string) || dataBO?.Npwp || ''}
         onChange={(v) => onChange('Npwp', v)}
       />
 
       <TextInput
         label="Nama lengkap sesuai KTP"
         placeholder=""
-        value={(form.NamaLengkap as string) || data?.NamaLengkap || ''}
+        value={(form.NamaLengkap as string) || dataBO?.Fullname || ''}
         onChange={(v) => onChange('NamaLengkap', v)}
       />
 
       <TextInput
         label="Email"
         placeholder=""
-        value={(form.email as string) || data?.email || ''}
+        value={(form.email as string) || dataBO?.Email || ''}
         onChange={(v) => onChange('email', v)}
       />
 
       <TextInput
         label="Nomor Handphone"
         placeholder=""
-        value={(form.Hp as string) || data?.Hp || ''}
+        value={(form.Hp as string) || dataBO?.Phone_number || ''}
         onChange={(v) => onChange('Hp', v)}
       />
 
       <TextInput
         label="Tempat Lahir"
         placeholder=""
-        value={(form.TempatLahir as string) || data?.TempatLahir || ''}
+        value={(form.TempatLahir as string) || dataBO?.BirthPlace || ''}
         onChange={(v) => onChange('TempatLahir', v)}
       />
 
-      <TextInput
+      <DateInput
         label="Tanggal Lahir"
-        placeholder=""
-        value={(form.TanggalLahir as string) || data?.TanggalLahir || ''}
-        onChange={(v) => onChange('TanggalLahir', v)}
+        value={(form.TanggalLahir as string) || dataBO?.BirthDate || ''}
+        onChange={(v) => onChange('BirthDate', v)}
       />
 
       <SearchSelectInput
@@ -150,7 +152,7 @@ export default function BeneficialOwnerFields({
         options={genderOptions}
         value={
           (form.JenisKelamin as string) ||
-          (data?.JenisKelamin !== undefined ? String(data.JenisKelamin) : '')
+          (data?.JenisKelamin !== undefined ? String(dataBO?.Gender) : '')
         }
         onChange={(v) => onChange('JenisKelamin', v)}
       />
@@ -160,7 +162,7 @@ export default function BeneficialOwnerFields({
         options={statusPerkawinanOptions}
         value={
           (form.StatusKawin as string) ||
-          (data?.StatusKawin !== undefined ? String(data.StatusKawin) : '')
+          (data?.StatusKawin !== undefined ? String(dataBO?.MaritalStatus) : '')
         }
         onChange={(v) => onChange('StatusKawin', v)}
       />

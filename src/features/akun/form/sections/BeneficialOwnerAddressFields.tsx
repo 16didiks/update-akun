@@ -1,4 +1,3 @@
-import FormInput from '@/features/akun/components/FormInput'
 import TextAreaInput from '../inputs/TextAreaInput'
 import SearchSelectInput from '../inputs/SearchSelectInput'
 import { MasterField, UserUpdate } from '../../types/akun.type'
@@ -56,7 +55,9 @@ export default function BeneficialOwnerAddressFields({
       value: item.Value,
     })) ?? []
 
-  const alamat = data?.AlamatPekerjaan
+  const dataBO = data?.BeneficialOwner || {}
+
+  const alamat = data?.BeneficialOwner?.CompanyAddressBo || {}
 
   // ===== ADDRESS OPTIONS =====
 
@@ -140,37 +141,37 @@ export default function BeneficialOwnerAddressFields({
       <SearchSelectInput
         label="Pekerjaan"
         options={perkerjaanOptions}
-        value={(form.JenisPekerjaan as string) || data?.JenisPekerjaan || ''}
+        value={(form.JenisPekerjaan as string) || dataBO?.Occupation || ''}
         onChange={(v) => onChange('JenisPekerjaan', v)}
       />
 
       <SearchSelectInput
         label="Jabatan"
         options={jabatanOptions}
-        value={
-          (form.JabatanPekerjaan as string) || data?.JabatanPekerjaan || ''
-        }
+        value={(form.JabatanPekerjaan as string) || dataBO?.JobPosition || ''}
         onChange={(v) => onChange('JabatanPekerjaan', v)}
       />
 
       <SearchSelectInput
         label="Bidang Usaha"
         options={bidangUsahaOptions}
-        value={(form.BidangUsaha as string) || data?.BidangUsaha || ''}
+        value={(form.BidangUsaha as string) || dataBO?.Industry_type || ''}
         onChange={(v) => onChange('BidangUsaha', v)}
       />
 
       <TextInput
         label="Nama Perusahaan"
         placeholder=""
-        value={(form.NamaPerusahaan as string) || data?.NamaPerusahaan || ''}
+        value={(form.NamaPerusahaan as string) || dataBO?.Industry_name || ''}
         onChange={(v) => onChange('NamaPerusahaan', v)}
       />
 
       <TextInput
         label="No. Telp Kantor"
         placeholder=""
-        value={(form.NoTelpKantor as string) || data?.NoTelpKantor || ''}
+        value={
+          (form.NoTelpKantor as string) || dataBO?.Company_phone_number || ''
+        }
         onChange={(v) => onChange('NoTelpKantor', v)}
       />
 
@@ -261,7 +262,7 @@ export default function BeneficialOwnerAddressFields({
         label="Penghasilan Pokok Pertahun"
         options={penghasilanPoOptions}
         value={
-          (form.PenghasilanPokok as string) || data?.PenghasilanPokok || ''
+          (form.PenghasilanPokok as string) || dataBO?.Income_per_year || ''
         }
         onChange={(val) => {
           if (typeof val === 'string') {

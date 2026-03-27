@@ -1,37 +1,48 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 
 interface Props {
-  label?: string
   onCapture: (file: File) => void
-  autoStart?: boolean
 }
 
-export default function CameraInput({ label, onCapture, autoStart }: Props) {
+export default function CameraInput({ onCapture }: Props) {
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const streamRef = useRef<MediaStream | null>(null)
+  const [preview, setPreview] = useState<string | null>(null)
 
-  const [isReady, setIsReady] = useState(false)
+  // ✅ INIT CAMERA
+  useEffect(() => {
+    const initCamera = async () => {
+      try {
+        const mediaStream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: false,
+        })
 
-  const startCamera = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: 'environment' },
-      })
+        streamRef.current = mediaStream
 
-      streamRef.current = stream
+        if (videoRef.current) {
+          const video = videoRef.current
+          video.srcObject = mediaStream
 
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream
+          video.onloadedmetadata = () => {
+            video.play().catch(console.error)
+          }
+        }
+      } catch (err) {
+        console.error(err)
+        alert('Tidak bisa akses kamera')
       }
-
-      setIsReady(true)
-    } catch (err) {
-      console.error('Camera error:', err)
-      alert('Akses kamera ditolak atau tidak tersedia')
     }
-  }
+
+    initCamera()
+
+    return () => {
+      streamRef.current?.getTracks().forEach((track) => track.stop())
+    }
+  }, [])
 
   const stopCamera = () => {
     streamRef.current?.getTracks().forEach((track) => track.stop())
@@ -41,15 +52,19 @@ export default function CameraInput({ label, onCapture, autoStart }: Props) {
   const capture = () => {
     if (!videoRef.current) return
 
+    const video = videoRef.current
+
     const canvas = document.createElement('canvas')
-    canvas.width = videoRef.current.videoWidth
-    canvas.height = videoRef.current.videoHeight
+    canvas.width = video.videoWidth
+    canvas.height = video.videoHeight
 
     const ctx = canvas.getContext('2d')
-    ctx?.drawImage(videoRef.current, 0, 0)
+    ctx?.drawImage(video, 0, 0)
 
     const dataUrl = canvas.toDataURL('image/png')
+    setPreview(dataUrl)
 
+    // convert ke file
     const arr = dataUrl.split(',')
     const mime = arr[0].match(/:(.*?);/)?.[1] || 'image/png'
     const bstr = atob(arr[1])
@@ -65,41 +80,56 @@ export default function CameraInput({ label, onCapture, autoStart }: Props) {
     stopCamera()
   }
 
-  // 🔥 AUTO START TANPA WARNING
-  useEffect(() => {
-    if (autoStart) {
-      Promise.resolve().then(() => {
-        startCamera()
-      })
-    }
-
-    return () => stopCamera()
-  }, [autoStart])
-
   return (
-    <div className="mb-6">
-      {label && <p className="text-sm mb-2">{label}</p>}
+    <div>
+      {!preview && (
+        <div className="relative">
+          {/* VIDEO */}
+          <video
+            ref={videoRef}
+            autoPlay
+            playsInline
+            muted
+            className="w-full aspect-[4/3] object-cover rounded-xl bg-black"
+          />
 
-      <div className="relative">
-        <video
-          ref={videoRef}
-          autoPlay
-          playsInline
-          className="w-full rounded-xl bg-black"
-        />
+          {/* FRAME KTP */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="relative w-[85%] aspect-[1.6/1]">
+              <div className="absolute inset-0 border-2 border-white rounded-lg" />
 
-        {/* Frame */}
-        <div className="absolute inset-4 border-2 border-white rounded-lg pointer-events-none" />
+              {/* corner */}
+              <div className="absolute w-6 h-6 border-t-4 border-l-4 border-white top-0 left-0" />
+              <div className="absolute w-6 h-6 border-t-4 border-r-4 border-white top-0 right-0" />
+              <div className="absolute w-6 h-6 border-b-4 border-l-4 border-white bottom-0 left-0" />
+              <div className="absolute w-6 h-6 border-b-4 border-r-4 border-white bottom-0 right-0" />
 
-        {isReady && (
+              {/* overlay */}
+              <div className="absolute inset-0 rounded-lg shadow-[0_0_0_9999px_rgba(0,0,0,0.5)]" />
+            </div>
+          </div>
+
+          {/* CAPTURE BUTTON */}
           <button
             onClick={capture}
-            className="mt-3 w-full bg-green-600 text-white py-2 rounded-xl"
+            className="absolute bottom-4 left-1/2 -translate-x-1/2 w-14 h-14 rounded-full bg-white shadow-lg flex items-center justify-center active:scale-90 transition"
           >
-            Ambil Foto
+            <div className="w-12 h-12 border-2 border-black rounded-full" />
           </button>
-        )}
-      </div>
+        </div>
+      )}
+
+      {preview && (
+        <div className="relative w-full aspect-[4/3]">
+          <Image
+            src={preview}
+            alt="Preview KTP"
+            fill
+            unoptimized
+            className="object-cover rounded-xl"
+          />
+        </div>
+      )}
     </div>
   )
 }

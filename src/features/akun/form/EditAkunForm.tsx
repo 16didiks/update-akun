@@ -32,6 +32,8 @@ export default function EditAkunForm() {
 
   const [step, setStep] = useState(1)
 
+  const [showCamera, setShowCamera] = useState(false)
+
   const router = useRouter()
 
   const totalSteps = 9
@@ -120,16 +122,27 @@ export default function EditAkunForm() {
         )
 
       case 7:
-        return <KtpUploadFields form={form} onChange={handleChange} />
+        return (
+          <BankFields
+            data={user}
+            master={master}
+            form={form}
+            onChange={handleChange}
+          />
+        )
 
-      // case 8:
-      //   return <SignatureFields form={form} onChange={handleChange} />
+      case 8:
+        return (
+          <KtpUploadFields
+            form={form}
+            onChange={handleChange}
+            showCamera={showCamera}
+            setShowCamera={setShowCamera}
+          />
+        )
 
       // case 9:
-      //   return (
-      //     <BankFields master={master} form={form} onChange={handleChange} />
-      //   )
-
+      //   return <SignatureFields form={form} onChange={handleChange} />
       default:
         return null
     }
