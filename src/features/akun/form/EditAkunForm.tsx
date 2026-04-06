@@ -141,8 +141,8 @@ export default function EditAkunForm() {
           />
         )
 
-      // case 9:
-      //   return <SignatureFields form={form} onChange={handleChange} />
+      case 9:
+        return <SignatureFields form={form} onChange={handleChange} />
       default:
         return null
     }
@@ -153,9 +153,6 @@ export default function EditAkunForm() {
       <div className="max-w-sm mx-auto min-h-screen bg-white text-gray-900 px-4 py-6">
         {/* Header */}
         <div className="flex items-center mb-4">
-          <button onClick={() => router.back()} className="mr-3">
-            ←
-          </button>
           <h1 className="text-lg items-center font-semibold">
             Form Pengkinian Data
           </h1>
