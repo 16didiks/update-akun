@@ -2,11 +2,11 @@
 
 import { useState } from 'react'
 
-import PersonalInfoFields from './sections/PersonalInfoFields'
-import AddressFields from './sections/AddressFields'
-import FamilyFields from './sections/FamilyFields'
-import JobFields from './sections/JobFields'
-import BankFields from './sections/BankFields'
+import PersonalInfoFields from './sections/edit-akun/PersonalInfoFields'
+import AddressFields from './sections/edit-akun/AddressFields'
+import FamilyFields from './sections/edit-akun/FamilyFields'
+import JobFields from './sections/edit-akun/JobFields'
+import BankFields from './sections/edit-akun/BankFields'
 import { useMasterData } from '../hooks/useMasterData'
 
 import { useAkun } from '../hooks/useAkun'
@@ -15,10 +15,10 @@ import ImportantInfoModal from './modals/ImportantInfoModal'
 import VerificationMethodModal from './modals/VerificationMethodModal'
 import OTPModal from './modals/OTPModal'
 import SuccessModal from './modals/SuccessModal'
-import BeneficialOwnerFields from './sections/BeneficialOwnerFields'
-import BeneficialOwnerAddressFields from './sections/BeneficialOwnerAddressFields'
-import KtpUploadFields from './sections/KtpUploadFields'
-import SignatureFields from './sections/SignatureFields'
+import BeneficialOwnerFields from './sections/edit-akun/BeneficialOwnerFields'
+import BeneficialOwnerAddressFields from './sections/edit-akun/BeneficialOwnerAddressFields'
+import KtpUploadFields from './sections/edit-akun/KtpUploadFields'
+import SignatureFields from './sections/edit-akun/SignatureFields'
 
 type FormState = Record<string, string | string[] | File | null>
 

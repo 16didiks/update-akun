@@ -1,6 +1,6 @@
-import TextInput from '../inputs/TextInput'
-import SearchSelectInput from '../inputs/SearchSelectInput'
-import { MasterField, UserUpdate } from '../../types/akun.type'
+import TextInput from '../../inputs/TextInput'
+import SearchSelectInput from '../../inputs/SearchSelectInput'
+import { MasterField, UserUpdate } from '../../../types/akun.type'
 
 type FormState = Record<string, string | string[] | File | null>
 

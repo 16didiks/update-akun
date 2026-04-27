@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import CameraInput from '../inputs/CameraInput'
+import CameraInput from '../../inputs/CameraInput'
 import Image from 'next/image'
 
 type FormState = Record<string, string | string[] | File | null>

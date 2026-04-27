@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
-import SearchSelectInput from '../inputs/SearchSelectInput'
-import { MasterField, UserUpdate } from '../../types/akun.type'
-import { useAddress } from '../../hooks/useAddress'
-import TextAreaInput from '../inputs/TextAreaInput'
+import SearchSelectInput from '../../inputs/SearchSelectInput'
+import { MasterField, UserUpdate } from '../../../types/akun.type'
+import { useAddress } from '../../../hooks/useAddress'
+import TextAreaInput from '../../inputs/TextAreaInput'
 
 type FormState = Record<string, string | string[] | File | null>
 

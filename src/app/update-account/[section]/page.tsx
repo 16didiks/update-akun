@@ -1,19 +1,13 @@
 'use client'
 
 import { useSearchParams } from 'next/navigation'
-import EditAkunForm from '@/features/akun/form/EditAkunForm'
+import UpdateAccountForm from '@/features/akun/form/UpdateAccountForm'
 
-export default function SectionPage({
-  params,
-}: {
-  params: { section: string }
-}) {
+export default function Page({ params }: { params: { section: string } }) {
   const searchParams = useSearchParams()
 
   const p1 = searchParams.get('p1') || ''
   const theme = (searchParams.get('theme') || 'light') as 'light' | 'dark'
 
-  return (
-    <EditAkunForm section={params.section} encryptedId={p1} theme={theme} />
-  )
+  return <UpdateAccountForm p1={p1} theme={theme} />
 }

@@ -178,3 +178,11 @@ export interface BeneficialOwner {
 
   Active?: boolean
 }
+
+export interface UserUpdate {
+  phone?: string
+  email?: string
+  workAddress?: string
+  ktp?: string
+  name?: string
+}

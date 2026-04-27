@@ -1,10 +1,14 @@
+type Theme = 'light' | 'dark'
+
 interface Props {
   label: string
   placeholder?: string
   type?: string
   required?: boolean
   value?: string
+  theme: Theme
   onChange?: (value: string) => void
+  disabled?: boolean
 }
 
 export default function TextInput({
@@ -14,6 +18,7 @@ export default function TextInput({
   required = false,
   value,
   onChange,
+  disabled = false,
 }: Props) {
   return (
     <div className="mb-5">
@@ -27,7 +32,8 @@ export default function TextInput({
         value={value ?? ''}
         placeholder={placeholder}
         onChange={(e) => onChange?.(e.target.value)}
-        className="
+        disabled={disabled}
+        className={`
           w-full
           rounded-lg
           border border-gray-300
@@ -36,7 +42,8 @@ export default function TextInput({
           bg-white
           focus:outline-none
           focus:ring-2 focus:ring-green-500
-        "
+          ${disabled ? 'bg-gray-100 cursor-not-allowed' : ''}
+        `}
       />
     </div>
   )

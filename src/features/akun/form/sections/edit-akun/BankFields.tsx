@@ -1,6 +1,6 @@
-import CheckboxInput from '../inputs/CheckboxInput'
-import SearchSelectInput from '../inputs/SearchSelectInput'
-import { MasterField, UserUpdate } from '../../types/akun.type'
+import CheckboxInput from '../../inputs/CheckboxInput'
+import SearchSelectInput from '../../inputs/SearchSelectInput'
+import { MasterField, UserUpdate } from '../../../types/akun.type'
 
 type FormState = Record<string, string | string[] | File | null>
 
