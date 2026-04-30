@@ -2,6 +2,7 @@
 
 import { UserUpdate } from '../../../types/akun.type'
 import TextInput from '../../inputs/TextInput'
+import RdnItem from '@/features/akun/components/RdnItem'
 
 type Theme = 'light' | 'dark'
 
@@ -72,6 +73,14 @@ export default function PersonalInfoSection({
           label="Email"
           value={form.email ?? data?.email ?? ''}
           onChange={(val) => onChange('email', val)}
+          theme={theme}
+        />
+
+        <RdnItem
+          logo="/mnc-bank.png"
+          bankName=""
+          accountNumber="01298031113"
+          accountName="Siti Sarifah Dewi"
           theme={theme}
         />
       </div>

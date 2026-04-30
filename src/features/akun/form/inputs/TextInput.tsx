@@ -19,7 +19,10 @@ export default function TextInput({
   value,
   onChange,
   disabled = false,
+  theme,
 }: Props) {
+  const isDark = theme === 'dark'
+
   return (
     <div className="mb-5">
       <label className="block text-sm mb-1">
@@ -34,16 +37,23 @@ export default function TextInput({
         onChange={(e) => onChange?.(e.target.value)}
         disabled={disabled}
         className={`
-          w-full
-          rounded-lg
-          border border-gray-300
-          px-3 py-2
-          text-sm
-          bg-white
-          focus:outline-none
-          focus:ring-2 focus:ring-green-500
-          ${disabled ? 'bg-gray-100 cursor-not-allowed' : ''}
-        `}
+  w-full
+  rounded-lg
+  px-3 py-2
+  text-sm
+  focus:outline-none
+  focus:ring-2 focus:ring-green-500
+
+  ${
+    theme === 'dark'
+      ? disabled
+        ? 'bg-[#1A1A1A] text-gray-400 border border-white/5 cursor-not-allowed'
+        : 'bg-[#111] text-white border border-white/10 placeholder:text-gray-500'
+      : disabled
+        ? 'bg-gray-100 text-gray-400 border border-gray-200 cursor-not-allowed'
+        : 'bg-white text-gray-900 border border-gray-300 placeholder:text-gray-400'
+  }
+`}
       />
     </div>
   )
